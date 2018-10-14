@@ -104,6 +104,7 @@ public class ProxyEndpointController extends BaseRestController {
             responseEntity = setErrorResponse(ex, request);
         }
         return responseEntity;
+
     }
 
 
