@@ -40,7 +40,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v1/transactions")
 public class ProxyEndpointController extends BaseRestController {
 
 	private static final Logger LOGGER = LogManager.getLogger(ProxyEndpointController.class);
@@ -66,7 +66,7 @@ public class ProxyEndpointController extends BaseRestController {
 	 */
 
 
-    @RequestMapping(value = "/transaction/{face_plate}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{face_plate}", method = RequestMethod.GET)
     public ResponseEntity<Object> getTransactionByFacePlate(@PathVariable("face_plate") String facePlate,
                                                             HttpServletRequest request) {
         ResponseEntity<Object> responseEntity;
@@ -79,7 +79,7 @@ public class ProxyEndpointController extends BaseRestController {
         return responseEntity;
     }
 
-    @RequestMapping(value = "/transaction/init/{face_plate}", method = RequestMethod.GET)
+    @RequestMapping(value = "/init/{face_plate}", method = RequestMethod.GET)
     public ResponseEntity<Object> getInitTransactionByFacePlate(@PathVariable("face_plate") String facePlate,
                                                             HttpServletRequest request) {
         ResponseEntity<Object> responseEntity;
@@ -93,7 +93,7 @@ public class ProxyEndpointController extends BaseRestController {
         return responseEntity;
     }
 
-    @RequestMapping(value = "/billboard/find/{code}", method = RequestMethod.GET)
+    @RequestMapping(value = "/billboards/find/{code}", method = RequestMethod.GET)
     public ResponseEntity<Object> getBillboardByCode(@PathVariable("code") String code,
                                                                 HttpServletRequest request) {
         ResponseEntity<Object> responseEntity;
@@ -123,7 +123,7 @@ public class ProxyEndpointController extends BaseRestController {
         return ResponseEntity.ok(transactionId);
     }
 
-    @RequestMapping(value = "/transaction/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<Object> setConfirmedInitTransactionByFacePlate(@RequestBody TransactionDto transaction,
                                                          BindingResult result) {
         ResponseEntity<Object> responseEntity = apiValidator(result);
@@ -138,7 +138,7 @@ public class ProxyEndpointController extends BaseRestController {
         return ResponseEntity.ok(transactionId);
     }
 
-    @RequestMapping(value = "/transaction/confirmed/{face_plate}", method = RequestMethod.GET)
+    @RequestMapping(value = "/confirmed/{face_plate}", method = RequestMethod.GET)
     public ResponseEntity<Object> getConfirmedTransactionByFacePlate(@PathVariable("face_plate") String facePlate,
                                                                 HttpServletRequest request) {
         ResponseEntity<Object> responseEntity;
@@ -151,7 +151,7 @@ public class ProxyEndpointController extends BaseRestController {
         return responseEntity;
     }
 
-    @RequestMapping(value = "/transaction/end/{face_plate}", method = RequestMethod.GET)
+    @RequestMapping(value = "/end/{face_plate}", method = RequestMethod.GET)
     public ResponseEntity<Object> getEndTransactionByFacePlate(@PathVariable("face_plate") String facePlate,
                                                                         HttpServletRequest request) {
         ResponseEntity<Object> responseEntity;
@@ -164,7 +164,7 @@ public class ProxyEndpointController extends BaseRestController {
         return responseEntity;
     }
 
-    @RequestMapping(value = "/billboard/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/billboards/create", method = RequestMethod.POST)
     public ResponseEntity<Object> createBillboard(@RequestBody BillboardDto billboard,
                                                                          BindingResult result) {
         ResponseEntity<Object> responseEntity = apiValidator(result);
