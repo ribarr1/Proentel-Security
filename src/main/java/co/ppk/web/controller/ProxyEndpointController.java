@@ -164,7 +164,7 @@ public class ProxyEndpointController extends BaseRestController {
         return responseEntity;
     }
 
-    @RequestMapping(value = "/billboards/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/billboards", method = RequestMethod.POST)
     public ResponseEntity<Object> createBillboard(@RequestBody BillboardDto billboard,
                                                                          BindingResult result) {
         ResponseEntity<Object> responseEntity = apiValidator(result);
@@ -207,6 +207,35 @@ public class ProxyEndpointController extends BaseRestController {
             return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
         }
         return ResponseEntity.ok(transactionId);
+    }
+
+    @RequestMapping(value = "/billboards", method = RequestMethod.PUT)
+    public ResponseEntity<Object> updateBillboard(@RequestBody BillboardDto billboard,
+                                                        BindingResult result) {
+        ResponseEntity<Object> responseEntity = apiValidator(result);
+        if (responseEntity != null) {
+            return responseEntity;
+        }
+
+        businessManager.updateBillboard(billboard);
+        HashMap<String,Boolean> response = new HashMap<>();
+        response.put("success", true);
+        return ResponseEntity.ok(response);
+    }
+
+    @RequestMapping(value = "/billboards/{billboardId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteUser(@PathVariable("billboardId") String billboardId,
+                                             HttpServletRequest request) {
+        ResponseEntity<Object> responseEntity;
+        try {
+            businessManager.deleteBillboard(billboardId);
+            HashMap<String, Boolean> response = new HashMap<>();
+            response.put("success", true);
+            responseEntity = ResponseEntity.ok(response);
+        } catch (HttpClientErrorException ex) {
+            responseEntity = setErrorResponse(ex, request);
+        }
+        return responseEntity;
     }
 
 

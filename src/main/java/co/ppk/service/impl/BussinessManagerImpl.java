@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import static co.ppk.utilities.Constants.TRANSACTION_ALREADY_EXISTS;
@@ -162,6 +163,24 @@ public class BussinessManagerImpl implements BusinessManager{
     @Override
     public String putEndTransactionById(String id) {
         return transactionRepository.putEndTransactionById(id);
+    }
+
+    @Override
+    public void updateBillboard(BillboardDto billboard) {
+        Optional<Billboard> currentBillboard = billboardRepository.getBillboardById(billboard.getId());
+        if(!currentBillboard.isPresent()) {
+            throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
+        }
+        billboardRepository.updateBillboard(new Billboard.Builder()
+                .setId(billboard.getId())
+                .setCode((Objects.isNull(billboard.getCode()) || billboard.getCode().isEmpty()) ? currentBillboard.get().getCode() : billboard.getCode())
+                .setAddress((Objects.isNull(billboard.getAddress()) || billboard.getAddress().isEmpty()) ? currentBillboard.get().getAddress() : billboard.getAddress())
+                .build());
+    }
+
+    @Override
+    public void deleteBillboard(String billboardId) {
+        billboardRepository.deleteBillboard(billboardId);
     }
 
 }

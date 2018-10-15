@@ -1,6 +1,6 @@
 CREATE TABLE transactions (
   id varchar(36) NOT NULL,
-  phone varchar(40) DEFAULT NULL,
+  phone varchar(1000) DEFAULT NULL,
   license_plate varchar(10) DEFAULT NULL,
   billboard_code varchar(15) DEFAULT NULL,
   start_date varchar(10) DEFAULT NULL,
@@ -22,7 +22,7 @@ CREATE TRIGGER transactions_update_trigger BEFORE UPDATE ON ppk_transactions.tra
 
 CREATE TABLE temporal_transactions (
   id varchar(36) NOT NULL,
-  phone varchar(40) DEFAULT NULL,
+  phone varchar(1000) DEFAULT NULL,
   license_plate varchar(10) DEFAULT NULL,
   billboard_code varchar(15) DEFAULT NULL,
   date varchar(10) DEFAULT NULL,

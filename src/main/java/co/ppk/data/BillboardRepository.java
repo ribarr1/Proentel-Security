@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -25,10 +26,10 @@ public class BillboardRepository {
         this.ds = DataSourceSingleton.getInstance();
     }
 
-    public Optional<Billboard> getBillboard(String Code) {
+    public Optional<Billboard> getBillboardById(String billboardId) {
         QueryRunner run = new QueryRunner(ds);
         try {
-            String query = "SELECT * FROM ppk_transactions.billboards WHERE code = '" + Code + "';";
+            String query = "SELECT * FROM ppk_transactions.billboards WHERE id = '" + billboardId + "';";
             Optional<Billboard> billboard = run.query(query,
                 rs -> {
                     if (!rs.next()) {
@@ -87,7 +88,7 @@ public class BillboardRepository {
                 String insert = "INSERT INTO ppk_transactions.billboards " +
                         "(id, " +
                         "code, " +
-                        "address, " +
+                        "address) " +
                         "VALUES " +
                         "('" + billboardId + "', " +
                         "'" + billboard.getCode() + "', " +
@@ -130,6 +131,54 @@ public class BillboardRepository {
                                 .build());
                     });
             return Billboard;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateBillboard(Billboard billboard) {
+        try {
+            Connection conn = ds.getConnection();
+            conn.setAutoCommit(false);
+            Statement stmt = conn.createStatement();
+            try {
+                String update = "UPDATE ppk_transactions.billboards " +
+                        "SET code = '" + billboard.getCode() + "', "+
+                        "address = '" + billboard.getAddress() + "' "+
+                        "WHERE " +
+                        "id = '" + billboard.getId() + "';";
+                stmt.executeUpdate(update);
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                throw new RuntimeException(e);
+            } finally {
+                DbUtils.close(conn);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteBillboard(String billboardId) {
+        try {
+            Connection conn = ds.getConnection();
+            conn.setAutoCommit(false);
+            Statement stmt = conn.createStatement();
+            try {
+                String delete = "DELETE FROM ppk_transactions.billboards " +
+                        "WHERE " +
+                        "id = '" + billboardId + "';";
+                stmt.execute(delete);
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                throw new RuntimeException(e);
+            } finally {
+                DbUtils.close(conn);
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
