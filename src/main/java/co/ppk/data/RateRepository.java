@@ -27,7 +27,7 @@ public class RateRepository {
         this.ds = DataSourceSingleton.getInstance();
     }
 
-    public Optional<Rate> getRate(String Rate) {
+    public Optional<Rate> getRate() {
         QueryRunner run = new QueryRunner(ds);
         try {
             String query = "SELECT * FROM ppk_transactions.rates WHERE status = 'A';";
