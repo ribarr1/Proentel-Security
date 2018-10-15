@@ -27,5 +27,7 @@ public interface BusinessManager {
 
     String putEndTransactionById(String id);
 
+    void updateBillboard(BillboardDto billboard);
 
+    void deleteBillboard(String billboardId);
 }
