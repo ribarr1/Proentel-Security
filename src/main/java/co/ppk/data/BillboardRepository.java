@@ -28,7 +28,7 @@ public class BillboardRepository {
     public Optional<Billboard> getBillboard(String Code) {
         QueryRunner run = new QueryRunner(ds);
         try {
-            String query = "SELECT * FROM transactions.billboards WHERE code = '" + Code + "';";
+            String query = "SELECT * FROM ppk_transactions.billboards WHERE code = '" + Code + "';";
             Optional<Billboard> billboard = run.query(query,
                 rs -> {
                     if (!rs.next()) {
@@ -54,7 +54,7 @@ public class BillboardRepository {
         QueryRunner run = new QueryRunner(ds);
         List<Billboard> billboard = new LinkedList<>();
         try {
-            String query = "SELECT * FROM transactions.billboard;";
+            String query = "SELECT * FROM ppk_transactions.billboards;";
             List<Billboard> billboardList = run.query(query,
                     rs -> {
                         while (rs.next()) {
@@ -84,7 +84,7 @@ public class BillboardRepository {
             conn.setAutoCommit(false);
             try {
 
-                String insert = "INSERT INTO transactions.billboard " +
+                String insert = "INSERT INTO ppk_transactions.billboards " +
                         "(id, " +
                         "code, " +
                         "address, " +
@@ -113,7 +113,7 @@ public class BillboardRepository {
     public Optional<Billboard> getBillboardByCode(String code) {
         QueryRunner run = new QueryRunner(ds);
         try {
-            String query = "SELECT * FROM transactions.billboards WHERE code = '" + code + "';";
+            String query = "SELECT * FROM ppk_transactions.billboards WHERE code = '" + code + "';";
             Optional<Billboard> Billboard = run.query(query,
                     rs -> {
                         if (!rs.next()) {
