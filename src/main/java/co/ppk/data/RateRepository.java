@@ -30,7 +30,7 @@ public class RateRepository {
     public Optional<Rate> getRate(String Rate) {
         QueryRunner run = new QueryRunner(ds);
         try {
-            String query = "SELECT * FROM transactions.rate WHERE status = 'A';";
+            String query = "SELECT * FROM ppk_transactions.rates WHERE status = 'A';";
             Optional<Rate> rate = run.query(query,
                 rs -> {
                     if (!rs.next()) {
@@ -57,7 +57,7 @@ public class RateRepository {
         QueryRunner run = new QueryRunner(ds);
         List<Rate> rate = new LinkedList<>();
         try {
-            String query = "SELECT * FROM transactions.rate;";
+            String query = "SELECT * FROM ppk_transactions.rates;";
             List<Rate> rateList = run.query(query,
                     rs -> {
                         while (rs.next()) {
@@ -88,7 +88,7 @@ public class RateRepository {
             conn.setAutoCommit(false);
             try {
 
-                String insert = "INSERT INTO transactions.rate " +
+                String insert = "INSERT INTO ppk_transactions.rates " +
                         "(id, " +
                         "date, " +
                         "value, " +

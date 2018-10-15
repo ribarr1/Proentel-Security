@@ -28,7 +28,7 @@ public class TransactionRepository {
     public Optional<Transaction> getTransaction(String TransactionId) {
         QueryRunner run = new QueryRunner(ds);
         try {
-            String query = "SELECT * FROM transactions.transactions WHERE id = '" + TransactionId + "';";
+            String query = "SELECT * FROM ppk_transactions.transactions WHERE id = '" + TransactionId + "';";
             Optional<Transaction> transaction = run.query(query,
                 rs -> {
                     if (!rs.next()) {
@@ -68,7 +68,7 @@ public class TransactionRepository {
         QueryRunner run = new QueryRunner(ds);
         List<Transaction> transactions = new LinkedList<>();
         try {
-            String query = "SELECT * FROM transactions.transactions;";
+            String query = "SELECT * FROM ppk_transactions.transactions;";
             List<Transaction> transactionList = run.query(query,
                     rs -> {
                         while (rs.next()) {
@@ -107,7 +107,7 @@ public class TransactionRepository {
             conn.setAutoCommit(false);
             try {
 
-                String insert = "INSERT INTO transactions.transactions " +
+                String insert = "INSERT INTO ppk_transactions.transactions " +
                         "(id, " +
                         "phone, " +
                         "license_plate, " +
@@ -151,7 +151,7 @@ public class TransactionRepository {
     public Optional<Transaction> getTransactionByFacePlate(String facePlate) {
         QueryRunner run = new QueryRunner(ds);
         try {
-            String query = "SELECT * FROM transactions.transactions WHERE license_plate = '" + facePlate + "';";
+            String query = "SELECT * FROM ppk_transactions.transactions WHERE license_plate = '" + facePlate + "';";
             Optional<Transaction> Transaction = run.query(query,
                     rs -> {
                         if (!rs.next()) {
@@ -185,7 +185,7 @@ public class TransactionRepository {
     public Optional<Transaction> getConfirmedTransactionByFacePlate(String facePlate) {
         QueryRunner run = new QueryRunner(ds);
         try {
-            String query = "SELECT * FROM transactions.transactions WHERE license_plate = '" + facePlate + "'" +
+            String query = "SELECT * FROM ppk_transactions.transactions WHERE license_plate = '" + facePlate + "'" +
                     " AND closed = 'N';";
             Optional<Transaction> Transaction = run.query(query,
                     rs -> {
@@ -221,7 +221,7 @@ public class TransactionRepository {
     public Optional<Transaction> getEndTransactionByFacePlate(String facePlate) {
         QueryRunner run = new QueryRunner(ds);
         try {
-            String query = "SELECT * FROM transactions.transactions WHERE license_plate = '" + facePlate + "'" +
+            String query = "SELECT * FROM ppk_transactions.transactions WHERE license_plate = '" + facePlate + "'" +
                     " AND closed = 'S';";
             Optional<Transaction> Transaction = run.query(query,
                     rs -> {
@@ -260,7 +260,7 @@ public class TransactionRepository {
             conn.setAutoCommit(false);
             try {
 
-                String update = "update transactions.transactions set" +
+                String update = "update ppk_transactions.transactions set" +
                         "id = '" +  transaction.getId() + "', " +
                         "phone= '" + transaction.getPhone() + "', " +
                         "license_plate= '" + transaction.getLicense_plate() + "', " +
@@ -297,7 +297,7 @@ public class TransactionRepository {
             conn.setAutoCommit(false);
             try {
 
-                String update = "update transactions.transactions set " +
+                String update = "update ppk_transactions.transactions set " +
                         "closed = 'P' where id = '"+id+";";
                 run.update(conn, update, new ScalarHandler<>());
                 conn.commit();
