@@ -6,6 +6,7 @@ import co.ppk.data.TemporalTransactionRepository;
 import co.ppk.domain.Billboard;
 import co.ppk.domain.Transaction;
 import co.ppk.domain.TemporalTransaction;
+import co.ppk.domain.Rate;
 import co.ppk.dto.BillboardDto;
 import co.ppk.dto.RateDto;
 import co.ppk.dto.TemporalTransactionDto;
@@ -105,9 +106,12 @@ public class BussinessManagerImpl implements BusinessManager{
     @Override
     public TransactionDto getConfirmedTransactionByFacePlate(String facePlate) {
         Optional<Transaction> transaction = transactionRepository.getConfirmedTransactionByFacePlate(facePlate);
-        if (!transaction.isPresent()) {throw new HttpClientErrorException(HttpStatus.NOT_FOUND); }
-        //TODO: Replace this code for mapper approach
         TransactionDto response = new TransactionDto();
+        if (!transaction.isPresent())
+        {
+            return response;
+        }
+        //TODO: Replace this code for mapper approach
         response.setId(transaction.get().getId());
         response.setPhone(transaction.get().getPhone());
         response.setLicense_plate(transaction.get().getLicense_plate());
@@ -154,10 +158,24 @@ public class BussinessManagerImpl implements BusinessManager{
 
     @Override
     public String createRate(RateDto rate) {
-        if(rateRepository.getRate(rate.getStatus()).isPresent()) {
+        if(rateRepository.getRate().isPresent()) {
             return "Ya Existe";
         }
         return rateRepository.createRate(rate);
+    }
+
+    @Override
+    public RateDto getRate() {
+        Optional<Rate> rate = rateRepository.getRate();
+        RateDto response = new RateDto();
+        if (!rate.isPresent()) {
+            throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
+        }
+        response.setId(rate.get().getId());
+        response.setDate(rate.get().getDate());
+        response.setStatus(rate.get().getStatus());
+        response.setValue(rate.get().getValue());
+        return response;
     }
 
     @Override

@@ -25,6 +25,8 @@ public interface BusinessManager {
 
     String createRate(RateDto rate);
 
+    RateDto getRate();
+
     String putEndTransactionById(String id);
 
     void updateBillboard(BillboardDto billboard);

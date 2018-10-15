@@ -19,11 +19,11 @@ public class DataSourceSingleton {
         if (instance == null) {
             HikariConfig config = new HikariConfig();
 
-            config.setJdbcUrl(Optional.ofNullable(System.getenv("CUSTOMER_DB_URL"))
+            config.setJdbcUrl(Optional.ofNullable(System.getenv("TRANSACTION_DB_URL"))
                     .orElse("jdbc:mysql://127.0.0.1:3306/ppk_transactions"));
-            config.setUsername(Optional.ofNullable(System.getenv("CUSTOMER_JDBC_USERNAME"))
+            config.setUsername(Optional.ofNullable(System.getenv("TRANSACTION_JDBC_USERNAME"))
                     .orElse("root"));
-            config.setPassword(Optional.ofNullable(System.getenv("CUSTOMER_JDBC_PASSWORD"))
+            config.setPassword(Optional.ofNullable(System.getenv("TRANSACTION_JDBC_PASSWORD"))
                     .orElse("root"));
             config.addDataSourceProperty("cachePrepStmts", "true");
             config.addDataSourceProperty("prepStmtCacheSize", "250");

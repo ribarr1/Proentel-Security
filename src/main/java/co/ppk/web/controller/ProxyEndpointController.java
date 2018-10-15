@@ -179,7 +179,7 @@ public class ProxyEndpointController extends BaseRestController {
         return ResponseEntity.ok(billboardId);
     }
 
-    @RequestMapping(value = "/rate/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/rate", method = RequestMethod.POST)
     public ResponseEntity<Object> createRate(@RequestBody RateDto rate,
                                                   BindingResult result) {
         ResponseEntity<Object> responseEntity = apiValidator(result);
@@ -193,6 +193,21 @@ public class ProxyEndpointController extends BaseRestController {
         }
         return ResponseEntity.ok(rateId);
     }
+
+    @RequestMapping(value = "/rate", method = RequestMethod.GET)
+    public ResponseEntity<Object> getRate(HttpServletRequest request) {
+        ResponseEntity<Object> responseEntity;
+        try {
+            RateDto rate = businessManager.getRate();
+            responseEntity = ResponseEntity.ok(rate);
+        } catch (HttpClientErrorException ex) {
+            responseEntity = setErrorResponse(ex, request);
+        }
+        return responseEntity;
+
+    }
+
+
 
     @RequestMapping(value = "/status/update", method = RequestMethod.POST)
     public ResponseEntity<Object> putEndTransactionById(@PathVariable("id") String id,
