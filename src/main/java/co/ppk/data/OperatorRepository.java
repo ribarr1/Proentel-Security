@@ -1,7 +1,7 @@
 package co.ppk.data;
 
-import co.ppk.domain.Billboard;
-import co.ppk.dto.BillboardDto;
+import co.ppk.domain.Operator;
+import co.ppk.dto.OperatorDto;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
@@ -26,18 +26,18 @@ public class BillboardRepository {
         this.ds = DataSourceSingleton.getInstance();
     }
 
-    public Optional<Billboard> getBillboardById(String billboardId) {
+    public Optional<Operator> getBillboardById(String billboardId) {
         QueryRunner run = new QueryRunner(ds);
         try {
             String query = "SELECT * FROM ppk_transactions.billboards WHERE id = '" + billboardId + "';";
-            Optional<Billboard> billboard = run.query(query,
+            Optional<Operator> billboard = run.query(query,
                 rs -> {
                     if (!rs.next()) {
                         Optional<Object> empty = Optional.empty();
                         return Optional.empty();
                     }
                     rs.last();
-                    return Optional.ofNullable(new Billboard.Builder()
+                    return Optional.ofNullable(new Operator.Builder()
                             .setId(rs.getString(1))
                             .setCode(rs.getString(2))
                             .setAddress(rs.getString(3))
@@ -51,15 +51,15 @@ public class BillboardRepository {
         }
     }
 
-    public List<Billboard> getBillboard() {
+    public List<Operator> getBillboard() {
         QueryRunner run = new QueryRunner(ds);
-        List<Billboard> billboard = new LinkedList<>();
+        List<Operator> operator = new LinkedList<>();
         try {
             String query = "SELECT * FROM ppk_transactions.billboards;";
-            List<Billboard> billboardList = run.query(query,
+            List<Operator> operatorList = run.query(query,
                     rs -> {
                         while (rs.next()) {
-                            billboard.add(new Billboard.Builder()
+                            operator.add(new Operator.Builder()
                                     .setId(rs.getString(1))
                                     .setCode(rs.getString(2))
                                     .setAddress(rs.getString(3))
@@ -67,15 +67,15 @@ public class BillboardRepository {
                                     .setUpdateDate(rs.getString(5))
                                     .build());
                         }
-                        return billboard;
+                        return operator;
                     });
-            return billboardList;
+            return operatorList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public String createBillboard(BillboardDto billboard) {
+    public String createBillboard(OperatorDto billboard) {
         QueryRunner run = new QueryRunner(ds);
 //        Timestamp now = Timestamp.from(Instant.now());
 
@@ -111,18 +111,18 @@ public class BillboardRepository {
 
 
 
-    public Optional<Billboard> getBillboardByCode(String code) {
+    public Optional<Operator> getBillboardByCode(String code) {
         QueryRunner run = new QueryRunner(ds);
         try {
             String query = "SELECT * FROM ppk_transactions.billboards WHERE code = '" + code + "';";
-            Optional<Billboard> Billboard = run.query(query,
+            Optional<Operator> Billboard = run.query(query,
                     rs -> {
                         if (!rs.next()) {
                             Optional<Object> empty = Optional.empty();
                             return Optional.empty();
                         }
                         rs.last();
-                        return Optional.ofNullable(new Billboard.Builder()
+                        return Optional.ofNullable(new Operator.Builder()
                                 .setId(rs.getString(1))
                                 .setCode(rs.getString(2))
                                 .setAddress(rs.getString(3))
@@ -136,17 +136,17 @@ public class BillboardRepository {
         }
     }
 
-    public void updateBillboard(Billboard billboard) {
+    public void updateBillboard(Operator operator) {
         try {
             Connection conn = ds.getConnection();
             conn.setAutoCommit(false);
             Statement stmt = conn.createStatement();
             try {
                 String update = "UPDATE ppk_transactions.billboards " +
-                        "SET code = '" + billboard.getCode() + "', "+
-                        "address = '" + billboard.getAddress() + "' "+
+                        "SET code = '" + operator.getCode() + "', "+
+                        "address = '" + operator.getAddress() + "' "+
                         "WHERE " +
-                        "id = '" + billboard.getId() + "';";
+                        "id = '" + operator.getId() + "';";
                 stmt.executeUpdate(update);
                 conn.commit();
             } catch (SQLException e) {

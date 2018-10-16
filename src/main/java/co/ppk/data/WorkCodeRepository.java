@@ -1,9 +1,7 @@
 package co.ppk.data;
 
-import co.ppk.domain.Billboard;
-import co.ppk.domain.Rate;
-import co.ppk.dto.BillboardDto;
-import co.ppk.dto.RateDto;
+import co.ppk.domain.WorkCodes;
+import co.ppk.dto.WorkCodeDto;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
@@ -27,18 +25,18 @@ public class RateRepository {
         this.ds = DataSourceSingleton.getInstance();
     }
 
-    public Optional<Rate> getRate() {
+    public Optional<WorkCodes> getRate() {
         QueryRunner run = new QueryRunner(ds);
         try {
             String query = "SELECT * FROM ppk_transactions.rates WHERE status = 'A';";
-            Optional<Rate> rate = run.query(query,
+            Optional<WorkCodes> rate = run.query(query,
                 rs -> {
                     if (!rs.next()) {
                         Optional<Object> empty = Optional.empty();
                         return Optional.empty();
                     }
                     rs.last();
-                    return Optional.ofNullable(new Rate.Builder()
+                    return Optional.ofNullable(new WorkCodes.Builder()
                             .setId(rs.getString(1))
                             .setDate(rs.getString(2))
                             .setValue(rs.getString(3))
@@ -53,15 +51,15 @@ public class RateRepository {
         }
     }
 
-    public List<Rate> getRates() {
+    public List<WorkCodes> getRates() {
         QueryRunner run = new QueryRunner(ds);
-        List<Rate> rate = new LinkedList<>();
+        List<WorkCodes> workCodes = new LinkedList<>();
         try {
             String query = "SELECT * FROM ppk_transactions.rates;";
-            List<Rate> rateList = run.query(query,
+            List<WorkCodes> workCodesList = run.query(query,
                     rs -> {
                         while (rs.next()) {
-                            rate.add(new Rate.Builder()
+                            workCodes.add(new WorkCodes.Builder()
                                     .setId(rs.getString(1))
                                     .setDate(rs.getString(2))
                                     .setValue(rs.getString(3))
@@ -70,15 +68,15 @@ public class RateRepository {
                                     .setUpdateDate(rs.getString(6))
                                     .build());
                         }
-                        return rate;
+                        return workCodes;
                     });
-            return rateList;
+            return workCodesList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public String createRate(RateDto rate) {
+    public String createRate(WorkCodeDto rate) {
         QueryRunner run = new QueryRunner(ds);
 //        Timestamp now = Timestamp.from(Instant.now());
 

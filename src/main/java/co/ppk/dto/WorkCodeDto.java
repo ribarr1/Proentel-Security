@@ -36,7 +36,7 @@ public class RateDto {
 
     @Override
     public String toString() {
-        return "BillboardDto{" +
+        return "OperatorDto{" +
                 "id='" + id + '\'' +
                 ", date='" + date + '\'' +
                 ", value='" + value + '\'' +
