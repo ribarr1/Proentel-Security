@@ -63,11 +63,15 @@ public class BussinessManagerImpl implements BusinessManager{
         if (!temporalTransaction.isPresent()) {
             return response;
         }else{
-
             response.setId(temporalTransaction.get().getId());
             response.setPhone(temporalTransaction.get().getPhone());
             response.setBillboards_code(temporalTransaction.get().getBillboards_code());
             response.setLicense_plate(temporalTransaction.get().getLicense_plate());
+            response.setDate(temporalTransaction.get().getDate());
+            response.setHour(temporalTransaction.get().getHour());
+            response.setTime(temporalTransaction.get().getTime());
+            response.setPrice(temporalTransaction.get().getPrice());
+            response.setAction(temporalTransaction.get().getAction());
             return response;
         }
     }
@@ -97,7 +101,7 @@ public class BussinessManagerImpl implements BusinessManager{
 
     @Override
     public String setConfirmedInitTransactionByFacePlate(TransactionDto transaction) {
-        if(!transactionRepository.getConfirmedTransactionByFacePlate(transaction.getLicense_plate()).isPresent()) {
+        if(transactionRepository.getConfirmedTransactionByFacePlate(transaction.getLicense_plate()).isPresent()) {
             return "No Existe";
         }
         return transactionRepository.setConfirmedInitTransactionByFacePlate(transaction);
@@ -199,6 +203,11 @@ public class BussinessManagerImpl implements BusinessManager{
     @Override
     public void deleteBillboard(String billboardId) {
         billboardRepository.deleteBillboard(billboardId);
+    }
+
+    @Override
+    public void deleteTemporalTransaction(String temporalTransactionId) {
+        temporalTransactionRepository.deleteTemporalTransaction(temporalTransactionId);
     }
 
 }

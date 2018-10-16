@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -150,6 +151,7 @@ public class TemporalTransactionRepository {
                             return Optional.empty();
                         }
                         rs.last();
+
                         return Optional.ofNullable(new TemporalTransaction.Builder()
                                 .setId(rs.getString(1))
                                 .setPhone(rs.getString(2))
@@ -164,6 +166,7 @@ public class TemporalTransactionRepository {
                                 .setUpdateDate(rs.getString(11))
                                 .build());
                     });
+
             return temporalTransaction;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -171,25 +174,27 @@ public class TemporalTransactionRepository {
     }
 
 
-  /*  public Optional<TemporalTransaction> getConfirmedTransactionByFacePlate(String facePlate) {
-        QueryRunner run = new QueryRunner(ds);
+    public void deleteTemporalTransaction(String temporalTransactionId) {
         try {
-            String query = "SELECT id FROM transactions.transaction_t WHERE license_plate = '" + facePlate + "' AND " +
-                    "action = 'I';";
-            Optional<TemporalTransaction> TemporalTransaction = run.query(query,
-                    rs -> {
-                        if (!rs.next()) {
-                            Optional<Object> empty = Optional.empty();
-                            return Optional.empty();
-                        }
-                        rs.last();
-                        return Optional.ofNullable(new TemporalTransaction.Builder()
-                                .setId(rs.getString(1))
-                                .build());
-                    });
-            return TemporalTransaction;
+            Connection conn = ds.getConnection();
+            conn.setAutoCommit(false);
+            Statement stmt = conn.createStatement();
+            try {
+                String delete = "DELETE FROM ppk_transactions.temporal_transactions " +
+                        "WHERE " +
+                        "id = '" + temporalTransactionId + "';";
+                stmt.execute(delete);
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                throw new RuntimeException(e);
+            } finally {
+                DbUtils.close(conn);
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }*/
+    }
+
 }

@@ -253,6 +253,21 @@ public class ProxyEndpointController extends BaseRestController {
         return responseEntity;
     }
 
+    @RequestMapping(value = "/temporal-transaction/delete/{temporalTransactionId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteTemporalTransaction(@PathVariable("temporalTransactionId") String temporalTransactionId,
+                                             HttpServletRequest request) {
+        ResponseEntity<Object> responseEntity;
+        try {
+            businessManager.deleteTemporalTransaction(temporalTransactionId);
+            HashMap<String, Boolean> response = new HashMap<>();
+            response.put("success", true);
+            responseEntity = ResponseEntity.ok(response);
+        } catch (HttpClientErrorException ex) {
+            responseEntity = setErrorResponse(ex, request);
+        }
+        return responseEntity;
+    }
+
 
     private ResponseEntity<Object> setErrorResponse(HttpClientErrorException ex, HttpServletRequest request) {
         HashMap<String, Object> map = new HashMap<>();

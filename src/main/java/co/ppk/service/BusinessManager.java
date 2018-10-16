@@ -31,5 +31,7 @@ public interface BusinessManager {
 
     void updateBillboard(BillboardDto billboard);
 
+    void deleteTemporalTransaction (String temporalTransactionId);
+
     void deleteBillboard(String billboardId);
 }
