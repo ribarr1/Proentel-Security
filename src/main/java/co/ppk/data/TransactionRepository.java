@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.Clock;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -111,7 +112,7 @@ public class TransactionRepository {
                         "(id, " +
                         "phone, " +
                         "license_plate, " +
-                        "billboards_code, " +
+                        "billboard_code, " +
                         "start_date, " +
                         "start_time, " +
                         "end_date, " +
@@ -133,6 +134,7 @@ public class TransactionRepository {
                         "'" + transaction.getClosed() + "');";
                 run.insert(conn, insert, new ScalarHandler<>());
                 conn.commit();
+
             } catch (SQLException e) {
                 conn.rollback();
                 throw new RuntimeException(e);
@@ -176,6 +178,7 @@ public class TransactionRepository {
                                 .build());
                     });
             return Transaction;
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -92,12 +92,12 @@ public class TemporalTransaction {
         }
 
 
-        public TemporalTransaction.Builder setDate(String end_date) {
+        public TemporalTransaction.Builder setDate(String date) {
             this.date = date;
             return this;
         }
 
-        public TemporalTransaction.Builder setHour(String end_time) {
+        public TemporalTransaction.Builder setHour(String hour) {
             this.hour = hour;
             return this;
         }
@@ -112,7 +112,7 @@ public class TemporalTransaction {
             return this;
         }
 
-        public TemporalTransaction.Builder setAction(String closed) {
+        public TemporalTransaction.Builder setAction(String action) {
             this.action = action;
             return this;
         }
