@@ -8,6 +8,7 @@
 	<name>PAPPKING OPERATOR</name>
 	<description>Pappking project - Operator API</description>
 
+
 	<!-- Inherit defaults from Spring Boot. -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>

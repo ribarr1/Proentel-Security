@@ -81,7 +81,8 @@ public class WorkCodeRepository {
     public String createWorkCode(WorkCodeDto workCode) {
         QueryRunner run = new QueryRunner(ds);
 //        Timestamp now = Timestamp.from(Instant.now());
-
+        //por ahora
+        String ahora = "";
         String workCodeId = UUID.randomUUID().toString();
         try {
             Connection conn = ds.getConnection();
