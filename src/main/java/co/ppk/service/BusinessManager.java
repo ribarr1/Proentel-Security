@@ -1,37 +1,12 @@
 package co.ppk.service;
 
-import co.ppk.dto.BillboardDto;
-import co.ppk.dto.RateDto;
-import co.ppk.dto.TemporalTransactionDto;
-import co.ppk.dto.TransactionDto;
+import co.ppk.dto.OperatorDto;
+import co.ppk.dto.WorkCodeDto;
 
 public interface BusinessManager {
 
-    TransactionDto findTransactionByFacePlate(String facePlate);
+    WorkCodeDto getWorkCodeByAuthorizationCode(String authorizationCode);
+    String createWorkCode (WorkCodeDto workCode);
 
-    TemporalTransactionDto getInitTransactionByFacePlate(String facePlate);
 
-    BillboardDto getBillboardByCode (String code);
-
-    String setTemporalTransaction(TemporalTransactionDto transactionT);
-
-    String setConfirmedInitTransactionByFacePlate(TransactionDto transaction);
-
-    TransactionDto getConfirmedTransactionByFacePlate (String facePlate);
-
-    TransactionDto getEndTransactionByFacePlate (String facePlate);
-
-    String createBillboard(BillboardDto billboard);
-
-    String createRate(RateDto rate);
-
-    RateDto getRate();
-
-    String putEndTransactionById(String id);
-
-    void updateBillboard(BillboardDto billboard);
-
-    void deleteTemporalTransaction (String temporalTransactionId);
-
-    void deleteBillboard(String billboardId);
 }

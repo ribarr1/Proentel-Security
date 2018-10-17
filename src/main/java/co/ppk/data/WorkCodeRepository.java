@@ -1,6 +1,6 @@
 package co.ppk.data;
 
-import co.ppk.domain.WorkCodes;
+import co.ppk.domain.WorkCode;
 import co.ppk.dto.WorkCodeDto;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
@@ -16,86 +16,90 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class RateRepository {
+public class WorkCodeRepository {
 
     private final DataSource ds;
 
-    public RateRepository() {
+    public WorkCodeRepository() {
 
         this.ds = DataSourceSingleton.getInstance();
     }
 
-    public Optional<WorkCodes> getRate() {
+    public Optional<WorkCode> getWorkCodeByAuthorizationCode(String authorizationCode) {
         QueryRunner run = new QueryRunner(ds);
         try {
-            String query = "SELECT * FROM ppk_transactions.rates WHERE status = 'A';";
-            Optional<WorkCodes> rate = run.query(query,
+            String query = "SELECT * FROM ppk_transactions.work_codes WHERE authorization_code = "+ authorizationCode;
+            Optional<WorkCode> workCode = run.query(query,
                 rs -> {
                     if (!rs.next()) {
                         Optional<Object> empty = Optional.empty();
                         return Optional.empty();
                     }
                     rs.last();
-                    return Optional.ofNullable(new WorkCodes.Builder()
+                    return Optional.ofNullable(new WorkCode.Builder()
                             .setId(rs.getString(1))
-                            .setDate(rs.getString(2))
-                            .setValue(rs.getString(3))
-                            .setStatus(rs.getString(4))
-                            .setCreateDate(rs.getString(5))
-                            .setUpdateDate(rs.getString(6))
+                            .setOperatorId(rs.getString(2))
+                            .setBillaboardId(rs.getString(3))
+                            .setAuthorization_code(rs.getString(4))
+                            .setStatus(rs.getString(5))
+                            .setCreateDate(rs.getString(6))
+                            .setUpdateDate(rs.getString(7))
                             .build());
                 });
-            return rate;
+            return workCode;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public List<WorkCodes> getRates() {
+    public List<WorkCode> getWorkCode() {
         QueryRunner run = new QueryRunner(ds);
-        List<WorkCodes> workCodes = new LinkedList<>();
+        List<WorkCode> workCodes = new LinkedList<>();
         try {
-            String query = "SELECT * FROM ppk_transactions.rates;";
-            List<WorkCodes> workCodesList = run.query(query,
+            String query = "SELECT * FROM ppk_transactions.work_codes;";
+            List<WorkCode> workCodeList = run.query(query,
                     rs -> {
                         while (rs.next()) {
-                            workCodes.add(new WorkCodes.Builder()
+                            workCodes.add(new WorkCode.Builder()
                                     .setId(rs.getString(1))
-                                    .setDate(rs.getString(2))
-                                    .setValue(rs.getString(3))
-                                    .setStatus(rs.getString(4))
-                                    .setCreateDate(rs.getString(5))
-                                    .setUpdateDate(rs.getString(6))
+                                    .setOperatorId(rs.getString(2))
+                                    .setBillaboardId(rs.getString(3))
+                                    .setAuthorization_code(rs.getString(4))
+                                    .setStatus(rs.getString(5))
+                                    .setCreateDate(rs.getString(6))
+                                    .setUpdateDate(rs.getString(7))
                                     .build());
                         }
                         return workCodes;
                     });
-            return workCodesList;
+            return workCodeList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public String createRate(WorkCodeDto rate) {
+    public String createWorkCode(WorkCodeDto workCode) {
         QueryRunner run = new QueryRunner(ds);
 //        Timestamp now = Timestamp.from(Instant.now());
 
-        String rateId = UUID.randomUUID().toString();
+        String workCodeId = UUID.randomUUID().toString();
         try {
             Connection conn = ds.getConnection();
             conn.setAutoCommit(false);
             try {
 
-                String insert = "INSERT INTO ppk_transactions.rates " +
+                String insert = "INSERT INTO ppk_transactions.work_codes " +
                         "(id, " +
-                        "date, " +
-                        "value, " +
+                        "operatorId, " +
+                        "billaboardId, " +
+                        "authorization_code, " +
                         "status) " +
                         "VALUES " +
-                        "('" + rateId + "', " +
-                        "'" + rate.getDate() + "', " +
-                        "'" + rate.getValue() + "', " +
-                        "'" + rate.getStatus() + "');";
+                        "('" + workCodeId + "', " +
+                        "'" + workCode.getOperatorId() + "', " +
+                        "'" + workCode.getBillaboardId() + "', " +
+                        "'" + workCode.getAuthorization_code() + "', " +
+                        "'" + workCode.getStatus() + "');";
                 run.insert(conn, insert, new ScalarHandler<>());
                 conn.commit();
             } catch (SQLException e) {
@@ -109,7 +113,7 @@ public class RateRepository {
             throw new RuntimeException(e);
         }
 
-        return rateId;
+        return workCodeId;
     }
 
 

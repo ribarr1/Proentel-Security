@@ -2,25 +2,30 @@ package co.ppk.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class RateDto {
-    private  String id;
-    private  String date;
-    private  String value;
-    private  String status;
-    private  String createDate;
-    private  String updateDate;
+public class WorkCodeDto {
+    private String id;
+    private String operatorId;
+    private String billaboardId;
+    private String authorization_code;
+    private String status;
+    private String createDate;
+    private String updateDate;
 
     @JsonProperty("id")
     public String getId() { return id;  }
     public void setId(String id) { this.id = id; }
 
-    @JsonProperty("date")
-    public String getDate() { return date;  }
-    public void setDate(String date) { this.date = date;  }
+    @JsonProperty("operatorId")
+    public String getOperatorId() { return operatorId;  }
+    public void setOperatorId(String operatorId) { this.operatorId = operatorId;  }
 
-    @JsonProperty("value")
-    public String getValue() { return value;  }
-    public void setValue(String value) { this.value = value;    }
+    @JsonProperty("billaboardId")
+    public String getBillaboardId() { return billaboardId;  }
+    public void setBillaboardId(String billaboardId) { this.billaboardId = billaboardId;    }
+
+    @JsonProperty("authorization_code")
+    public String getAuthorization_code() { return authorization_code;  }
+    public void setAuthorization_codes(String authorization_code) { this.authorization_code = authorization_code;    }
 
     @JsonProperty("status")
     public String getStatus() { return status;  }
@@ -38,8 +43,9 @@ public class RateDto {
     public String toString() {
         return "OperatorDto{" +
                 "id='" + id + '\'' +
-                ", date='" + date + '\'' +
-                ", value='" + value + '\'' +
+                ", operatorId='" + operatorId + '\'' +
+                ", billaboardId='" + billaboardId + '\'' +
+                ", authorization_code='" + authorization_code + '\'' +
                 ", status='" + status + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", updateDate='" + updateDate + '\'' +

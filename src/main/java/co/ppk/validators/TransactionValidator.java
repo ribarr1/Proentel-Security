@@ -10,10 +10,7 @@
 
 package co.ppk.validators;
 
-import co.ppk.dto.TransactionDto;
-import co.ppk.enums.Codes;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

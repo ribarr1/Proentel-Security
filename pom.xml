@@ -2,11 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ca.ppk</groupId>
-	<artifactId>pappking-transaction-be-api</artifactId>
+	<artifactId>pappking-operator-be-api</artifactId>
 	<version>0.0.1</version>
 	<packaging>war</packaging>
-	<name>PAPPKING TRANSACTION</name>
-	<description>Pappking project - Transaction API</description>
+	<name>PAPPKING OPERATOR</name>
+	<description>Pappking project - Operator API</description>
 
 	<!-- Inherit defaults from Spring Boot. -->
 	<parent>
@@ -127,7 +127,7 @@
 
 	<build>
 		<defaultGoal>package</defaultGoal>
-		<finalName>pappking.transaction.be.api</finalName>
+		<finalName>pappking.operator.be.api</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

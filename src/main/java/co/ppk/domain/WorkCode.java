@@ -1,6 +1,6 @@
 package co.ppk.domain;
 
-public class WorkCodes {
+public class WorkCode {
 
 
 
@@ -15,7 +15,7 @@ public class WorkCodes {
 
 
 
-    private WorkCodes(
+    private WorkCode(
             String id,
             String operatorId,
             String billaboardId,
@@ -51,43 +51,43 @@ public class WorkCodes {
         private String updateDate;
 
 
-        public WorkCodes.Builder setId(String id) {
+        public WorkCode.Builder setId(String id) {
             this.id = id;
             return this;
         }
 
-        public WorkCodes.Builder setOperatorId(String operatorId) {
+        public WorkCode.Builder setOperatorId(String operatorId) {
             this.operatorId = operatorId;
             return this;
         }
 
-        public WorkCodes.Builder setBillaboardId(String billaboardId) {
+        public WorkCode.Builder setBillaboardId(String billaboardId) {
             this.billaboardId = billaboardId;
             return this;
         }
 
-        public WorkCodes.Builder setAuthorization_code(String authorization_code) {
+        public WorkCode.Builder setAuthorization_code(String authorization_code) {
             this.authorization_code = authorization_code;
             return this;
         }
 
-        public WorkCodes.Builder setStatus(String status) {
+        public WorkCode.Builder setStatus(String status) {
             this.status = status;
             return this;
         }
 
-        public WorkCodes.Builder setCreateDate(String createDate) {
+        public WorkCode.Builder setCreateDate(String createDate) {
             this.createDate = createDate;
             return this;
         }
 
-        public WorkCodes.Builder setUpdateDate(String updateDate) {
+        public WorkCode.Builder setUpdateDate(String updateDate) {
             this.updateDate = updateDate;
             return this;
         }
 
-        public WorkCodes build() {
-            return new WorkCodes(id, operatorId, billaboardId,authorization_code, status, createDate, updateDate);
+        public WorkCode build() {
+            return new WorkCode(id, operatorId, billaboardId,authorization_code, status, createDate, updateDate);
         }
     }
 }
