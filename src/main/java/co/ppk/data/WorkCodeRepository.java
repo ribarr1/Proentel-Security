@@ -28,7 +28,7 @@ public class WorkCodeRepository {
     public Optional<WorkCode> getWorkCodeByAuthorizationCode(String authorizationCode) {
         QueryRunner run = new QueryRunner(ds);
         try {
-            String query = "SELECT * FROM ppk_transactions.work_codes WHERE authorization_code = "+ authorizationCode;
+            String query = "SELECT * FROM ppk_operators.work_codes WHERE authorization_code = '"+ authorizationCode+"'";
             Optional<WorkCode> workCode = run.query(query,
                 rs -> {
                     if (!rs.next()) {
@@ -56,7 +56,7 @@ public class WorkCodeRepository {
         QueryRunner run = new QueryRunner(ds);
         List<WorkCode> workCodes = new LinkedList<>();
         try {
-            String query = "SELECT * FROM ppk_transactions.work_codes;";
+            String query = "SELECT * FROM ppk_operators.work_codes;";
             List<WorkCode> workCodeList = run.query(query,
                     rs -> {
                         while (rs.next()) {
@@ -89,7 +89,7 @@ public class WorkCodeRepository {
             conn.setAutoCommit(false);
             try {
 
-                String insert = "INSERT INTO ppk_transactions.work_codes " +
+                String insert = "INSERT INTO ppk_operators.work_codes " +
                         "(id, " +
                         "operatorId, " +
                         "billaboardId, " +

@@ -57,6 +57,38 @@ public class OperatorRepository {
         }
     }
 
+    public Optional<Operator> getOperatorByDocument(String documentType, String documentNumber) {
+        QueryRunner run = new QueryRunner(ds);
+        try {
+            String query = "SELECT * FROM ppk_operators.operators WHERE document_type = '" + documentType + "'" +
+                            " AND document_number = '"+documentNumber+"';";
+            Optional<Operator> operator = run.query(query,
+                    rs -> {
+                        if (!rs.next()) {
+                            Optional<Object> empty = Optional.empty();
+                            return Optional.empty();
+                        }
+                        rs.last();
+                        return Optional.ofNullable(new Operator.Builder()
+                                .setId(rs.getString(1))
+                                .setDocument_type(rs.getString(2))
+                                .setDocument_number(rs.getString(3))
+                                .setName(rs.getString(4))
+                                .setLast_name(rs.getString(5))
+                                .setAddress(rs.getString(6))
+                                .setPersonal_phone(rs.getString(7))
+                                .setAssigned_phone(rs.getString(8))
+                                .setStatus(rs.getString(9))
+                                .setCreateDate(rs.getString(10))
+                                .setUpdateDate(rs.getString(11))
+                                .build());
+                    });
+            return operator;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<Operator> getOperator() {
         QueryRunner run = new QueryRunner(ds);
         List<Operator> operator = new LinkedList<>();

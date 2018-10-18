@@ -16,6 +16,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import java.util.Objects;
 import java.util.Optional;
 
+import static co.ppk.utilities.Constants.OPERATOR_CODE_ALREADY_EXISTS;
 import static co.ppk.utilities.Constants.WORK_CODE_ALREADY_EXISTS;
 
 @Component
@@ -56,6 +57,34 @@ public class BussinessManagerImpl implements BusinessManager{
         }
         return workCodeRepository.createWorkCode(workCode);
     }
+
+    @Override
+    public String createOperator(OperatorDto operator) {
+        if(operatorRepository.getOperatorByDocument(operator.getDocument_type(),operator.getDocument_number()).isPresent()) {
+            return OPERATOR_CODE_ALREADY_EXISTS;
+        }
+        return operatorRepository.createOperator(operator);
+    }
+
+    @Override
+    public OperatorDto getOperatorById(String id) {
+        Optional<Operator> operator = operatorRepository.getOperatorById(id);
+        OperatorDto response = new OperatorDto();
+        if (!operator.isPresent()) {
+            return response;
+        }
+        response.setId(operator.get().getId());
+        response.setDocument_type(operator.get().getDocument_type());
+        response.setDocument_number(operator.get().getDocument_number());
+        response.setName(operator.get().getName());
+        response.setLast_name(operator.get().getLast_name());
+        response.setAddress(operator.get().getAddress());
+        response.setPersonal_phone(operator.get().getPersonal_phone());
+        response.setAssigned_phones(operator.get().getAssigned_phone());
+        response.setStatus(operator.get().getStatus());
+        return response;
+    }
+
 
 
 

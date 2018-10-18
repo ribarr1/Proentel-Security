@@ -10,6 +10,7 @@
 
 package co.ppk.validators;
 
+import co.ppk.dto.OperatorDto;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -31,6 +32,6 @@ public class TransactionValidator extends BaseValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return TransactionDto.class.equals(clazz);
+		return OperatorDto.class.equals(clazz);
 	}
 }

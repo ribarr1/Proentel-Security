@@ -37,7 +37,7 @@ public class OperatorDto {
 
     @JsonProperty("address")
     public String getAddress() { return address;  }
-    public void setAddress(String address) { this.id = address; }
+    public void setAddress(String address) { this.address = address; }
 
     @JsonProperty("personal_phone")
     public String getPersonal_phone() { return personal_phone;  }
@@ -45,7 +45,7 @@ public class OperatorDto {
 
     @JsonProperty("assigned_phone")
     public String getAssigned_phone() { return assigned_phone;  }
-    public void setAssigned_phones(String assigned_phone) { this.address = assigned_phone;    }
+    public void setAssigned_phones(String assigned_phone) { this.assigned_phone = assigned_phone;    }
 
     @JsonProperty("status")
     public String getStatus() { return status; }
