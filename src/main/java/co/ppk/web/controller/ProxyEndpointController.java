@@ -93,6 +93,36 @@ public class ProxyEndpointController extends BaseRestController {
         return ResponseEntity.ok(workCodeId);
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Object> getOperatorById(@PathVariable("id") String id,
+                                                                 HttpServletRequest request) {
+        ResponseEntity<Object> responseEntity;
+        try {
+            OperatorDto operator = businessManager.getOperatorById(id);
+            responseEntity = ResponseEntity.ok(operator);
+        } catch (HttpClientErrorException ex) {
+            responseEntity = setErrorResponse(ex, request);
+        }
+        return responseEntity;
+    }
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public ResponseEntity<Object> createOperator(@RequestBody OperatorDto operator,
+                                                 BindingResult result) {
+        ResponseEntity<Object> responseEntity = apiValidator(result);
+        if (responseEntity != null) {
+            return responseEntity;
+        }
+
+        String operatorId = businessManager.createOperator(operator);
+        if(operatorId.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+        }
+        return ResponseEntity.ok(operatorId);
+    }
+
+
+
     private ResponseEntity<Object> setErrorResponse(HttpClientErrorException ex, HttpServletRequest request) {
         HashMap<String, Object> map = new HashMap<>();
         HttpStatus status;

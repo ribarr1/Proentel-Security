@@ -7,6 +7,7 @@ public interface BusinessManager {
 
     WorkCodeDto getWorkCodeByAuthorizationCode(String authorizationCode);
     String createWorkCode (WorkCodeDto workCode);
-
+    String createOperator (OperatorDto operator);
+    OperatorDto getOperatorById(String id);
 
 }
