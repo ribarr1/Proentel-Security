@@ -64,7 +64,7 @@ public class ProxyEndpointController extends BaseRestController {
 	 */
 
 
-    @RequestMapping(value = "work-codes/{authorizationCode}", method = RequestMethod.GET)
+    @RequestMapping(value = "/work-codes/{authorizationCode}", method = RequestMethod.GET)
     public ResponseEntity<Object> getWorkCodeByAuthorizationCode(@PathVariable("authorizationCode") String authorizationCode,
                                                             HttpServletRequest request) {
         ResponseEntity<Object> responseEntity;
@@ -78,7 +78,9 @@ public class ProxyEndpointController extends BaseRestController {
     }
 
 
-    @RequestMapping(value = "work-codes/create", method = RequestMethod.POST)
+
+
+    @RequestMapping(value = "/work-codes/create", method = RequestMethod.POST)
     public ResponseEntity<Object> createWorkCode(@RequestBody WorkCodeDto workCode,
                                                          BindingResult result) {
         ResponseEntity<Object> responseEntity = apiValidator(result);
