@@ -18,9 +18,10 @@ public class DataSourceSingleton {
     public static synchronized DataSource getInstance() {
         if (instance == null) {
             HikariConfig config = new HikariConfig();
-
+            //config.setDriverClassName("com.mysql.cj.jdbc.Driver");
             config.setJdbcUrl(Optional.ofNullable(System.getenv("OPERATOR_DB_URL"))
-                    .orElse("jdbc:mysql://127.0.0.1:3306/ppk_operators"));
+                   // .orElse("jdbc:mysql://104.197.233.102:3306/ppk_operators"));
+                      .orElse("jdbc:mysql://127.0.0.1:3306/ppk_operators"));
             config.setUsername(Optional.ofNullable(System.getenv("OPERATOR_JDBC_USERNAME"))
                     .orElse("root"));
             config.setPassword(Optional.ofNullable(System.getenv("OPERATOR_JDBC_PASSWORD"))
