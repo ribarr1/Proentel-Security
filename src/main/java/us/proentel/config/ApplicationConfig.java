@@ -8,7 +8,7 @@
  *
  ******************************************************************/
 
-package co.ppk.config;
+package us.proentel.config;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -22,24 +22,24 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import co.ppk.utilities.PropertyManagerApacheImpl;
+import us.proentel.utilities.PropertyManagerApacheImpl;
 
 /***
  * Configuration class for Spring IOC
  * 
  * @Descripcion
- * @author jmunoz
+ * @author ribarra
  * 
  * @version 1.0
  */
 
 @Configuration
-@ComponentScan(basePackages = "co.ppk")
+@ComponentScan(basePackages = "us.proentel")
 @EnableWebMvc
 public class ApplicationConfig {
 
-	private static final String PPK_ENV_VAR = "PPK_HOME";
-	private static final String PPK_MSTR_CONFG = "properties/master-config.properties";
+	private static final String PROENTEL_ENV_VAR = "PROENTEL_HOME";
+	private static final String PROENTEL_MSTR_CONFG = "properties/master-config.properties";
 	
 	/** The log. */
 	private final Logger log = LoggerFactory.getLogger(ApplicationConfig.class);
@@ -75,7 +75,7 @@ public class ApplicationConfig {
 	 */
 	@Bean("pm")
 	public PropertyManagerApacheImpl getPM() {
-		return new PropertyManagerApacheImpl(PPK_ENV_VAR, PPK_MSTR_CONFG);
+		return new PropertyManagerApacheImpl(PROENTEL_ENV_VAR, PROENTEL_MSTR_CONFG);
 	}
 	
 }

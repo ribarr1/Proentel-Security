@@ -1,4 +1,4 @@
-package us.gryc.auth.jwt;
+package us.proentel.jwt;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

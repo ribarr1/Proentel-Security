@@ -7,21 +7,19 @@
  *
  *
  ******************************************************************/
-package co.ppk.web.controller;
+package us.proentel.web.controller;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Properties;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
-import co.ppk.exception.PpkFieldValidationException;
+import us.proentel.exception.PpkFieldValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 
-import co.ppk.enums.ResponseKeyName;
+import us.proentel.enums.ResponseKeyName;
 
 /**
  * @author jmunoz

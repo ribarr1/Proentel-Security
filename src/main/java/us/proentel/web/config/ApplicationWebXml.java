@@ -8,11 +8,11 @@
  *
  ******************************************************************/
 
-package co.ppk.web.config;
+package us.proentel.web.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import co.ppk.config.ApplicationConfig;
+import us.proentel.config.ApplicationConfig;
 
 /**
  * <h1>Application Web Xml!</h1> Application web configuration details are

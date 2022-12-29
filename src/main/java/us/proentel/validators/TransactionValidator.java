@@ -8,12 +8,12 @@
  * 
  ******************************************************************/
 
-package co.ppk.validators;
+package us.proentel.validators;
 
-import co.ppk.dto.OperatorDto;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import us.proentel.dto.UserDto;
 
 
 @Component
@@ -32,6 +32,6 @@ public class TransactionValidator extends BaseValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return OperatorDto.class.equals(clazz);
+		return UserDto.class.equals(clazz);
 	}
 }

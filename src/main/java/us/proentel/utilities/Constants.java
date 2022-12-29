@@ -1,4 +1,4 @@
-package co.ppk.utilities;
+package us.proentel.utilities;
 
 public class Constants {
 
@@ -9,8 +9,10 @@ public class Constants {
 	public static final String CLIENT_ID_HEADER = "x-client-id";
 
 
-	public static final String WORK_CODE_ALREADY_EXISTS = "EL CODIGO DE AUTORIZACION YA EXISTE";
-	public static final String OPERATOR_CODE_ALREADY_EXISTS = "EL OPERADOR DE AUTORIZACION YA EXISTE";
+
+	public static final String USER_NOT_EXISTS = "USUARIO INVALIDO";
+	public static final String USER_ALREADY_EXISTS = "USUARIO YA EXISTE";
+	public static final String ROL_ALREADY_EXISTS = "ROL YA EXISTE";
 
 
 	private Constants() {

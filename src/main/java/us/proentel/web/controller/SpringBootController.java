@@ -7,13 +7,13 @@
  *
  *
  ******************************************************************/
-package co.ppk.web.controller;
+package us.proentel.web.controller;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
-import co.ppk.config.ApplicationConfig;
+import us.proentel.config.ApplicationConfig;
 
 /***
  * Configuration class for Spring IOC
@@ -32,7 +32,7 @@ public class SpringBootController  {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		System.setProperty("PPK_HOME", "/ppk");
+		System.setProperty("PROENTEL_HOME", "/proentel");
 		SpringApplication.run(SpringBootController.class, args);
 	}
 

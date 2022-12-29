@@ -8,7 +8,7 @@
  *
  ******************************************************************/
 
-package co.ppk.web.config;
+package us.proentel.web.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -17,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
-import co.ppk.config.ApplicationConfig;
+import us.proentel.config.ApplicationConfig;
 
 /***
  * Configuration class for Spring IOC

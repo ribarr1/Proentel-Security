@@ -1,12 +1,11 @@
 package us.proentel.data;
 
-import us.proentel.domain.City;
-import us.proentel.domain.City;
-import us.proentel.dto.CityDto;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.stereotype.Component;
+import us.proentel.domain.User;
+import us.proentel.dto.UserDto;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -18,102 +17,135 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class CityRepository {
+public class UserRepository {
 
     private final DataSource ds;
 
-    public CityRepository() {
+    public UserRepository() {
 
         this.ds = DataSourceSingleton.getInstance();
     }
 
-    public Optional<City> getCityById(String Id) {
+    public Optional<User> getUserById(String Id) {
         QueryRunner run = new QueryRunner(ds);
         try {
-            String query = "SELECT * FROM proentel_geography.cities WHERE id = '" + Id + "';";
-            Optional<City> city = run.query(query,
+            String query = "SELECT * FROM proentel_security.user WHERE id = '" + Id + "';";
+            Optional<User> user = run.query(query,
                 rs -> {
                     if (!rs.next()) {
                         Optional<Object> empty = Optional.empty();
                         return Optional.empty();
                     }
                     rs.last();
-                    return Optional.ofNullable(new City.Builder()
+                    return Optional.ofNullable(new User.Builder()
                             .setId(rs.getString(1))
-                            .setCode(rs.getString(2))
+                            .setEmail(rs.getString(2))
                             .setName(rs.getString(3))
-                            .setCode_state(rs.getString(4))
-                            .setIsactive(rs.getString(5))
-                            .setCreateBy(rs.getString(6))
-                            .setUpdateBy(rs.getString(7))
-                            .setCreateDate(rs.getString(8))
-                            .setUpdateDate(rs.getString(9))
+                            .setUsername(rs.getString(4))
+                            .setPassword(rs.getString(5))
+                            .setIsactive(rs.getString(6))
+                            .setCreateBy(rs.getString(7))
+                            .setUpdateBy(rs.getString(8))
+                            .setCreateDate(rs.getString(9))
+                            .setUpdateDate(rs.getString(10))
                             .build());
                 });
-            return city;
+            return user;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public Optional<City> getCityByCode(String code) {
+    public Optional<User> getUserByUserName(String username) {
         QueryRunner run = new QueryRunner(ds);
         try {
-            String query = "SELECT * FROM proentel_geography.cities WHERE code = '" + code + "';";
-            Optional<City> city = run.query(query,
+            String query = "SELECT * FROM proentel_security.user WHERE username = '" + username + "';";
+            Optional<User> user = run.query(query,
                     rs -> {
                         if (!rs.next()) {
                             Optional<Object> empty = Optional.empty();
                             return Optional.empty();
                         }
                         rs.last();
-                        return Optional.ofNullable(new City.Builder()
+                        return Optional.ofNullable(new User.Builder()
                                 .setId(rs.getString(1))
-                                .setCode(rs.getString(2))
+                                .setEmail(rs.getString(2))
                                 .setName(rs.getString(3))
-                                .setCode_state(rs.getString(4))
-                                .setIsactive(rs.getString(5))
-                                .setCreateBy(rs.getString(6))
-                                .setUpdateBy(rs.getString(7))
-                                .setCreateDate(rs.getString(8))
-                                .setUpdateDate(rs.getString(9))
+                                .setUsername(rs.getString(4))
+                                .setPassword(rs.getString(5))
+                                .setIsactive(rs.getString(6))
+                                .setCreateBy(rs.getString(7))
+                                .setUpdateBy(rs.getString(8))
+                                .setCreateDate(rs.getString(9))
+                                .setUpdateDate(rs.getString(10))
                                 .build());
                     });
-            return city;
+            return user;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-   public List<City> getCities() {
+    public Optional<User> getUserByEmail(String email) {
         QueryRunner run = new QueryRunner(ds);
-        List<City> cities = new LinkedList<>();
         try {
-            String query = "SELECT * FROM proentel_geography.cities";
-            List<City> cityList = run.query(query,
+            String query = "SELECT * FROM proentel_security.user WHERE email = '" + email + "';";
+            Optional<User> user = run.query(query,
+                    rs -> {
+                        if (!rs.next()) {
+                            Optional<Object> empty = Optional.empty();
+                            return Optional.empty();
+                        }
+                        rs.last();
+                        return Optional.ofNullable(new User.Builder()
+                                .setId(rs.getString(1))
+                                .setEmail(rs.getString(2))
+                                .setName(rs.getString(3))
+                                .setUsername(rs.getString(4))
+                                .setPassword(rs.getString(5))
+                                .setIsactive(rs.getString(6))
+                                .setCreateBy(rs.getString(7))
+                                .setUpdateBy(rs.getString(8))
+                                .setCreateDate(rs.getString(9))
+                                .setUpdateDate(rs.getString(10))
+                                .build());
+                    });
+            return user;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+   public List<User> getCities() {
+        QueryRunner run = new QueryRunner(ds);
+        List<User> user = new LinkedList<>();
+        try {
+            String query = "SELECT * FROM proentel_security.user";
+            List<User> userList = run.query(query,
                     rs -> {
                         while (rs.next()) {
-                            cities.add(new City.Builder()
+                            user.add(new User.Builder()
                                     .setId(rs.getString(1))
-                                    .setCode(rs.getString(2))
+                                    .setEmail(rs.getString(2))
                                     .setName(rs.getString(3))
-                                    .setCode_state(rs.getString(4))
-                                    .setIsactive(rs.getString(5))
-                                    .setCreateBy(rs.getString(6))
-                                    .setUpdateBy(rs.getString(7))
-                                    .setCreateDate(rs.getString(8))
-                                    .setUpdateDate(rs.getString(9))
+                                    .setUsername(rs.getString(4))
+                                    .setPassword(rs.getString(5))
+                                    .setIsactive(rs.getString(6))
+                                    .setCreateBy(rs.getString(7))
+                                    .setUpdateBy(rs.getString(8))
+                                    .setCreateDate(rs.getString(9))
+                                    .setUpdateDate(rs.getString(10))
                                     .build());
                         }
-                        return cities;
+                        return user;
                     });
-            return cityList;
+            return userList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public String createCity(CityDto city) {
+    public String createUser(UserDto user) {
         QueryRunner run = new QueryRunner(ds);
 //        Timestamp now = Timestamp.from(Instant.now());
 
@@ -122,20 +154,22 @@ public class CityRepository {
             Connection conn = ds.getConnection();
             conn.setAutoCommit(false);
             try {
-                String insert = "INSERT INTO proentel_geography.cities " +
+                String insert = "INSERT INTO proentel_security.user " +
                         "(id, " +
-                        "code, " +
+                        "email, " +
                         "name, " +
-                        "code_state, " +
+                        "username, " +
+                        "password, " +
                         "create_by, " +
                         "update_by) " +
                         "VALUES " +
                         "('" + Id + "', " +
-                        "'" + city.getCode() + "', " +
-                        "'" + city.getName() + "', " +
-                        "'" + city.getCode_state() + "', " +
-                        "'" + city.getCreateBy() + "', " +
-                        "'" + city.getUpdateBy() +  "');";
+                        "'" + user.getEmail() + "', " +
+                        "'" + user.getName() + "', " +
+                        "'" + user.getUsername() + "', " +
+                        "'" + user.getPassword() + "', " +
+                        "'" + user.getCreateBy() + "', " +
+                        "'" + user.getUpdateBy() +  "');";
                 run.insert(conn, insert, new ScalarHandler<>());
                 conn.commit();
             } catch (SQLException e) {
@@ -152,21 +186,21 @@ public class CityRepository {
         return Id;
     }
 
-    public void updateCity(City city) {
+    public void updateUser(User user) {
         try {
             Connection conn = ds.getConnection();
             conn.setAutoCommit(false);
             Statement stmt = conn.createStatement();
             try {
-                String update = "UPDATE proentel_geography.cities " +
-                        "SET code = '" + city.getCode() + "', "+
-                        "name = '" + city.getName() + "', "+
-                        "code_state = '" + city.getCode_state() + "', "+
-                        "isactive = '" + city.getIsactive() + "', "+
-                        "update_by = '" + city.getUpdateBy() + "', "+
+                String update = "UPDATE proentel_security.user " +
+                        "SET email = '" + user.getEmail() + "', "+
+                        "name = '" + user.getName() + "', "+
+                        "username = '" + user.getUsername() + "', "+
+                        "isactive = '" + user.getIsactive() + "', "+
+                        "update_by = '" + user.getUpdateBy() + "', "+
                         "update_date = NOW()"+
                         "WHERE " +
-                        "id = '" + city.getId() + "';";
+                        "id = '" + user.getId() + "';";
                 stmt.executeUpdate(update);
                 conn.commit();
             } catch (SQLException e) {

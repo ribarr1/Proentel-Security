@@ -1,27 +1,30 @@
 package us.proentel.domain;
 
-public class Rol {
+public class UserRol {
 
 
 
     private final String id;
-    private final String name;
+    private final String userId;
+    private final String rolId;
     private final String isactive;
     private final String createBy;
     private final String updateBy;
     private final String createDate;
     private final String updateDate;
 
-    private Rol(
+    private UserRol(
             String id,
-            String name,
+            String userId,
+            String rolId,
             String isactive,
             String createBy,
             String updateBy,
             String createDate,
             String updateDate) {
         this.id = id;
-        this.name = name;
+        this.userId = userId;
+        this.rolId = rolId;
         this.isactive = isactive;
         this.createBy = createBy;
         this.updateBy = updateBy;
@@ -31,7 +34,8 @@ public class Rol {
 
 
     public String getId() { return id; }
-    public String getName() { return name; }
+    public String getUserId() { return userId; }
+    public String getRolId() { return rolId; }
     public String getIsactive() { return isactive; }
     public String getCreateBy() { return createBy; }
     public String getUpdateBy() { return updateBy; }
@@ -40,7 +44,8 @@ public class Rol {
 
     public static class Builder {
         private String id;
-        private String name;
+        private String userId;
+        private  String rolId;
         private  String isactive;
         private  String createBy;
         private  String updateBy;
@@ -48,43 +53,47 @@ public class Rol {
         private String updateDate;
 
 
-        public Rol.Builder setId(String id) {
+        public UserRol.Builder setId(String id) {
             this.id = id;
             return this;
         }
 
-        public Rol.Builder setName(String name) {
-            this.name = name;
+        public UserRol.Builder setUserId(String userId) {
+            this.userId = userId;
             return this;
         }
 
-        public Rol.Builder setIsactive(String isactive) {
+        public UserRol.Builder setRolId(String rolId) {
+            this.rolId = rolId;
+            return this;
+        }
+        public UserRol.Builder setIsactive(String isactive) {
             this.isactive = isactive;
             return this;
         }
 
-        public Rol.Builder setCreateBy(String createBy) {
+        public UserRol.Builder setCreateBy(String createBy) {
             this.createBy = createBy;
             return this;
         }
 
-        public Rol.Builder setUpdateBy(String updateBy) {
+        public UserRol.Builder setUpdateBy(String updateBy) {
             this.updateBy = updateBy;
             return this;
         }
 
-        public Rol.Builder setCreateDate(String createDate) {
+        public UserRol.Builder setCreateDate(String createDate) {
             this.createDate = createDate;
             return this;
         }
 
-        public Rol.Builder setUpdateDate(String updateDate) {
+        public UserRol.Builder setUpdateDate(String updateDate) {
             this.updateDate = updateDate;
             return this;
         }
 
-        public Rol build() {
-            return new Rol(id,  name, isactive, createBy, updateBy,  createDate, updateDate);
+        public UserRol build() {
+            return new UserRol(id,  userId, rolId, isactive, createBy, updateBy,  createDate, updateDate);
         }
     }
 }

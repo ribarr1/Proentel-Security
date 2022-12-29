@@ -1,52 +1,32 @@
 package us.proentel.domain;
 
-public class Menu {
+public class EntityFunction {
 
 
 
-    private final String id;
-    private final String name;
-    private final String number;
+    private final String nameFunction;
 
 
-    private Menu(
-            String id,
-            String name,
-            String number) {
-        this.id = id;
-        this.name = name;
-        this.number = number;
+    private EntityFunction(
+            String nameFunction) {
+        this.nameFunction = nameFunction;
     }
 
 
-    public String getId() { return id; }
-    public String getName() { return name; }
-    public String getNumber() { return number; }
+    public String getNameFunction() { return nameFunction; }
 
     public static class Builder {
-        private String id;
-        private String name;
-        private String number;
+        private String nameFunction;
 
-
-        public Menu.Builder setId(String id) {
-            this.id = id;
-            return this;
-        }
-
-        public Menu.Builder setName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Menu.Builder setNumber(String number) {
-            this.number = number;
+        public EntityFunction.Builder setNameFunction(String nameFunction) {
+            this.nameFunction = nameFunction;
             return this;
         }
 
 
-        public Menu build() {
-            return new Menu(id, name,number);
+
+        public EntityFunction build() {
+            return new EntityFunction(nameFunction);
         }
     }
 }

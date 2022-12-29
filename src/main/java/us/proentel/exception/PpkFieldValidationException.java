@@ -1,7 +1,7 @@
 /**
  * 
  */
-package co.ppk.exception;
+package us.proentel.exception;
 
 import org.springframework.validation.BindingResult;
 

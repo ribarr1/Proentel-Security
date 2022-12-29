@@ -1,13 +1,22 @@
-package co.ppk.service;
+package us.proentel.service;
 
-import co.ppk.dto.OperatorDto;
-import co.ppk.dto.WorkCodeDto;
+import us.proentel.domain.*;
+import us.proentel.dto.*;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface BusinessManager {
 
-    WorkCodeDto getWorkCodeByAuthorizationCode(String authorizationCode);
-    String createWorkCode (WorkCodeDto workCode);
-    String createOperator (OperatorDto operator);
-    OperatorDto getOperatorById(String id);
+    String createUser (UserDto user);
+    JwtDto loginUser (LoginDto login);
+
+    String createRol (RolDto rol);
+    Optional<User> loadUser (LoginDto login);
+
+    List<MenuDto> getMenuByRol(String rol);
+
+    List<FunctionDto> getFunctionByEntityId(String id, String rol);
+
 
 }

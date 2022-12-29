@@ -1,9 +1,9 @@
-package co.ppk.utilities;
+package us.proentel.utilities;
 
 import java.util.List;
 import java.util.Map;
 
-import co.ppk.exception.PpkException;
+import us.proentel.exception.PpkException;
 import org.apache.commons.configuration.event.ConfigurationListener;
 
 /***

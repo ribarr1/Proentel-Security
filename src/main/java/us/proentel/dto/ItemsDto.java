@@ -1,48 +1,23 @@
 package us.proentel.dto;
 
-import org.springframework.security.core.GrantedAuthority;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Collection;
+import java.util.List;
 
-public class JwtDto {
-    private String token;
-    private String bearer = "Bearer";
-    private String id;
+public class ItemsDto {
+    private String order;
     private String name;
-    private String username;
-    private String rol;
-    private  String status;
-    private  String message;
-
-   /* public JwtDto(String token, String nombreUsuario, String rol) {
-        this.token = token;
-        this.nombreUsuario = nombreUsuario;
-        this.rol = rol;
-    }*/
+    private String path;
+    private List<FunctionDto> function;
 
 
-    public String getToken() {
-        return token;
+
+    public String getOrder() {
+        return order;
     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getBearer() {
-        return bearer;
-    }
-
-    public void setBearer(String bearer) {
-        this.bearer = bearer;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setOrder(String order) {
+        this.order = order;
     }
 
     public String getName() {
@@ -52,50 +27,32 @@ public class JwtDto {
     public void setName(String name) {
         this.name = name;
     }
+    
 
-    public String getUsername() {
-        return username;
+    public String getPath() {
+        return path;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setPath(String path) {
+        this.path = path;
     }
 
-    public String getRol() {
-        return rol;
+    @JsonProperty("functions")
+    public List<FunctionDto> getFunction() {
+        return function;
     }
 
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
+    public void setFunction(List<FunctionDto> function) {
+        this.function = function;
     }
 
     @Override
     public String toString() {
-        return "OperatorDto{" +
-                "token='" + token + '\'' +
-                ", bearer='" + bearer + '\'' +
-                ", id='" + id + '\'' +
-                ", username='" + username + '\'' +
+        return "ItemsDto{" +
+                "order='" + order + '\'' +
                 ", name='" + name + '\'' +
-                ", rol='" + rol + '\'' +
-                ", status='" + status + '\'' +
-                ", message='" + message + '\'' +
+                ", path='" + path + '\'' +
+                ", functions='" + function + '\'' +
                 '}';
     }
 }

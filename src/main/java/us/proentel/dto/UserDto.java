@@ -2,11 +2,12 @@ package us.proentel.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class CityDto {
+public class UserDto {
     private String id;
-    private String code;
+    private String email;
     private String name;
-    private String code_state;
+    private String username;
+    private String password;
     private  String isactive;
     private  String createBy;
     private  String updateBy;
@@ -17,17 +18,21 @@ public class CityDto {
     public String getId() { return id;  }
     public void setId(String id) { this.id = id; }
 
-    @JsonProperty("code")
-    public String getCode() { return code;  }
-    public void setCode(String code) { this.code = code;  }
+    @JsonProperty("email")
+    public String getEmail() { return email;  }
+    public void setEmail(String email) { this.email = email;  }
 
     @JsonProperty("name")
     public String getName() { return name;  }
     public void setName(String name) { this.name = name;    }
 
-    @JsonProperty("code_state")
-    public String getCode_state() { return code_state; }
-    public void setCode_state(String code_state) { this.code_state = code_state; }
+    @JsonProperty("username")
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
+
+    @JsonProperty("password")
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 
     @JsonProperty("isactive")
     public String getIsactive() { return isactive; }
@@ -53,9 +58,10 @@ public class CityDto {
     public String toString() {
         return "OperatorDto{" +
                 "id='" + id + '\'' +
-                ", code='" + code + '\'' +
+                ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
-                ", code_state='" + code_state + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
                 ", isactive='" + isactive + '\'' +
                 ", createBy='" + createBy + '\'' +
                 ", updateBy='" + updateBy + '\'' +

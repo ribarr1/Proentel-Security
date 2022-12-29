@@ -4,6 +4,9 @@ import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.stereotype.Component;
+import us.proentel.domain.EntityFunction;
+import us.proentel.domain.EntityMenu;
+import us.proentel.domain.Menu;
 import us.proentel.domain.Rol;
 import us.proentel.dto.RolDto;
 
@@ -17,156 +20,109 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class RolRepository {
+public class MenuRepository {
 
     private final DataSource ds;
 
-    public RolRepository() {
+    public MenuRepository() {
 
         this.ds = DataSourceSingleton.getInstance();
     }
 
-    public Optional<Rol> getRolById(String Id) {
+
+   public List<Menu> getMenuByRol(String rol) {
         QueryRunner run = new QueryRunner(ds);
+        List<Menu> menu = new LinkedList<>();
         try {
-            String query = "SELECT * FROM proentel_security.rol WHERE id = '" + Id + "';";
-            Optional<Rol> rol = run.query(query,
-                rs -> {
-                    if (!rs.next()) {
-                        Optional<Object> empty = Optional.empty();
-                        return Optional.empty();
-                    }
-                    rs.last();
-                    return Optional.ofNullable(new Rol.Builder()
-                            .setId(rs.getString(1))
-                            .setName(rs.getString(2))
-                            .setIsactive(rs.getString(3))
-                            .setCreateBy(rs.getString(4))
-                            .setUpdateBy(rs.getString(5))
-                            .setCreateDate(rs.getString(6))
-                            .setUpdateDate(rs.getString(7))
-                            .build());
-                });
-            return rol;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public Optional<Rol> getRolByName(String name) {
-        QueryRunner run = new QueryRunner(ds);
-        try {
-            String query = "SELECT * FROM proentel_security.rol WHERE name = '" + name + "';";
-            Optional<Rol> rol = run.query(query,
-                    rs -> {
-                        if (!rs.next()) {
-                            Optional<Object> empty = Optional.empty();
-                            return Optional.empty();
-                        }
-                        rs.last();
-                        return Optional.ofNullable(new Rol.Builder()
-                                .setId(rs.getString(1))
-                                .setName(rs.getString(2))
-                                .setIsactive(rs.getString(3))
-                                .setCreateBy(rs.getString(4))
-                                .setUpdateBy(rs.getString(5))
-                                .setCreateDate(rs.getString(6))
-                                .setUpdateDate(rs.getString(7))
-                                .build());
-                    });
-            return rol;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-
-   public List<Rol> getRol() {
-        QueryRunner run = new QueryRunner(ds);
-        List<Rol> rol = new LinkedList<>();
-        try {
-            String query = "SELECT * FROM proentel_security.rol";
-            List<Rol> rolList = run.query(query,
+            String query = "select distinct menuid, namemenu,numbermenu from\n" +
+                    " (select men.id menuid, men.name namemenu, men.number numbermenu  \n" +
+                    " from rol rol, rol_entity_function ref, entity ent, menu men, `function` fun\n" +
+                    " where rol.id = ref.rol_id\n" +
+                    " and ent.id = ref.entity_id\n" +
+                    " and men.id = ent.id_menu\n" +
+                    " and fun.id = ref.function_id\n" +
+                    " and rol.name = '"+ rol + "'\n" +
+                    " order by men.number, ent.number) data";
+            List<Menu> menuList = run.query(query,
                     rs -> {
                         while (rs.next()) {
-                            rol.add(new Rol.Builder()
+                            menu.add(new Menu.Builder()
                                     .setId(rs.getString(1))
                                     .setName(rs.getString(2))
-                                    .setIsactive(rs.getString(3))
-                                    .setCreateBy(rs.getString(4))
-                                    .setUpdateBy(rs.getString(5))
-                                    .setCreateDate(rs.getString(6))
-                                    .setUpdateDate(rs.getString(7))
+                                    .setNumber(rs.getString(3))
                                     .build());
                         }
-                        return rol;
+                        return menu;
                     });
-            return rolList;
+            return menuList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public String createRol(RolDto rol) {
+    public List<EntityMenu> getEntityByMenuId(String menuId, String rol) {
         QueryRunner run = new QueryRunner(ds);
-//        Timestamp now = Timestamp.from(Instant.now());
-
-        String Id = UUID.randomUUID().toString();
+        List<EntityMenu> entity = new LinkedList<>();
         try {
-            Connection conn = ds.getConnection();
-            conn.setAutoCommit(false);
-            try {
-                String insert = "INSERT INTO proentel_security.rol " +
-                        "(id, " +
-                        "name, " +
-                        "create_by, " +
-                        "update_by) " +
-                        "VALUES " +
-                        "('" + Id + "', " +
-                        "'" + rol.getName() + "', " +
-                        "'" + rol.getCreateBy() + "', " +
-                        "'" + rol.getUpdateBy() +  "');";
-                run.insert(conn, insert, new ScalarHandler<>());
-                conn.commit();
-            } catch (SQLException e) {
-                conn.rollback();
-                throw new RuntimeException(e);
-            } finally {
-                DbUtils.close(conn);
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return Id;
-    }
-
-    public void updateRol(Rol rol) {
-        try {
-            Connection conn = ds.getConnection();
-            conn.setAutoCommit(false);
-            Statement stmt = conn.createStatement();
-            try {
-                String update = "UPDATE proentel_security.rol " +
-                        "SET name = '" + rol.getName() + "', "+
-                        "isactive = '" + rol.getIsactive() + "', "+
-                        "update_by = '" + rol.getUpdateBy() + "', "+
-                        "update_date = NOW()"+
-                        "WHERE " +
-                        "id = '" + rol.getId() + "';";
-                stmt.executeUpdate(update);
-                conn.commit();
-            } catch (SQLException e) {
-                conn.rollback();
-                throw new RuntimeException(e);
-            } finally {
-                DbUtils.close(conn);
-            }
-
+            String query = "select distinct menuid, identity, numberentity,nameentity, path from\n" +
+                    "(select men.id menuid, men.name namemenu, men.number numbermenu, ent.id identity, ent.number numberentity, \n" +
+                    "ent.name nameentity, ent.path, fun.name namefuction  \n" +
+                    "from rol rol, rol_entity_function ref, entity ent, menu men, `function` fun\n" +
+                    "where rol.name = '" + rol + "'\n" +
+                    "and rol.id = ref.rol_id\n" +
+                    "and ent.id = ref.entity_id\n" +
+                    "and men.id = ent.id_menu\n" +
+                    "and fun.id = ref.function_id\n" +
+                    "order by men.number, ent.number) data\n" +
+                    "where menuid = '"+menuId+"'";
+            List<EntityMenu> EntityMenuList = run.query(query,
+                    rs -> {
+                        while (rs.next()) {
+                            entity.add(new EntityMenu.Builder()
+                                    .setIdEntity(rs.getString(2))
+                                    .setNameEntity(rs.getString(4))
+                                    .setNumberEntity(rs.getString(3))
+                                    .setPath(rs.getString(5))
+                                    .build());
+                        }
+                        return entity;
+                    });
+            return EntityMenuList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
+    public List<EntityFunction> getFunctionByEntityId(String entityId, String rol) {
+        QueryRunner run = new QueryRunner(ds);
+        List<EntityFunction> entityFunction = new LinkedList<>();
+        try {
+            String query = "select distinct namefuction from\n" +
+                    "(select men.id menuid, men.name namemenu, men.number numbermenu, ent.id identity, ent.number numberentity, \n" +
+                    "ent.name nameentity, ent.path, fun.name namefuction  \n" +
+                    "from rol rol, rol_entity_function ref, entity ent, menu men, `function` fun\n" +
+                    "where rol.name = '" + rol + "'\n" +
+                    "and rol.id = ref.rol_id\n" +
+                    "and ent.id = ref.entity_id\n" +
+                    "and men.id = ent.id_menu\n" +
+                    "and fun.id = ref.function_id\n" +
+                    "order by men.number, ent.number) data\n" +
+                    "where identity = '"+entityId+"'";
+            List<EntityFunction> EntityFunctionList = run.query(query,
+                    rs -> {
+                        while (rs.next()) {
+                            entityFunction.add(new EntityFunction.Builder()
+                                    .setNameFunction(rs.getString(1))
+                                    .build());
+                        }
+                        return entityFunction;
+                    });
+            return EntityFunctionList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
 }

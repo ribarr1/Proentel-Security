@@ -5,6 +5,7 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.stereotype.Component;
 import us.proentel.domain.Rol;
+import us.proentel.domain.UserRol;
 import us.proentel.dto.RolDto;
 
 import javax.sql.DataSource;
@@ -17,37 +18,38 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class RolRepository {
+public class UserRolRepository {
 
     private final DataSource ds;
 
-    public RolRepository() {
+    public UserRolRepository() {
 
         this.ds = DataSourceSingleton.getInstance();
     }
 
-    public Optional<Rol> getRolById(String Id) {
+    public Optional<UserRol> getByUserId(String Id) {
         QueryRunner run = new QueryRunner(ds);
         try {
-            String query = "SELECT * FROM proentel_security.rol WHERE id = '" + Id + "';";
-            Optional<Rol> rol = run.query(query,
+            String query = "SELECT * FROM proentel_security.user_rol WHERE user_id = '" + Id + "';";
+            Optional<UserRol> userRol = run.query(query,
                 rs -> {
                     if (!rs.next()) {
                         Optional<Object> empty = Optional.empty();
                         return Optional.empty();
                     }
                     rs.last();
-                    return Optional.ofNullable(new Rol.Builder()
+                    return Optional.ofNullable(new UserRol.Builder()
                             .setId(rs.getString(1))
-                            .setName(rs.getString(2))
-                            .setIsactive(rs.getString(3))
-                            .setCreateBy(rs.getString(4))
-                            .setUpdateBy(rs.getString(5))
-                            .setCreateDate(rs.getString(6))
-                            .setUpdateDate(rs.getString(7))
+                            .setUserId(rs.getString(2))
+                            .setRolId(rs.getString(3))
+                            .setIsactive(rs.getString(4))
+                            .setCreateBy(rs.getString(5))
+                            .setUpdateBy(rs.getString(6))
+                            .setCreateDate(rs.getString(7))
+                            .setUpdateDate(rs.getString(8))
                             .build());
                 });
-            return rol;
+            return userRol;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

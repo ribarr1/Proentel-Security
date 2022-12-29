@@ -1,52 +1,63 @@
 package us.proentel.domain;
 
-public class Menu {
+public class EntityMenu {
 
 
 
-    private final String id;
-    private final String name;
-    private final String number;
+    private final String idEntity;
+    private final String numberEntity;
+    private final String nameEntity;
+    private final String path;
 
 
-    private Menu(
-            String id,
-            String name,
-            String number) {
-        this.id = id;
-        this.name = name;
-        this.number = number;
+
+    private EntityMenu(
+            String idEntity,
+            String numberEntity,
+            String nameEntity,
+            String path) {
+        this.idEntity = idEntity;
+        this.numberEntity = numberEntity;
+        this.nameEntity = nameEntity;
+        this.path = path;
     }
 
 
-    public String getId() { return id; }
-    public String getName() { return name; }
-    public String getNumber() { return number; }
+    public String getIdEntity() { return idEntity; }
+    public String getNumberEntity() { return numberEntity; }
+    public String getNameEntity() { return nameEntity; }
+    public String getPath() { return path; }
 
     public static class Builder {
-        private String id;
-        private String name;
-        private String number;
+        private String idEntity;
+        private String numberEntity;
+        private String nameEntity;
+        private String path;
 
 
-        public Menu.Builder setId(String id) {
-            this.id = id;
+        public EntityMenu.Builder setIdEntity(String idEntity) {
+            this.idEntity = idEntity;
             return this;
         }
 
-        public Menu.Builder setName(String name) {
-            this.name = name;
+        public EntityMenu.Builder setNumberEntity(String numberEntity) {
+            this.numberEntity = numberEntity;
             return this;
         }
 
-        public Menu.Builder setNumber(String number) {
-            this.number = number;
+        public EntityMenu.Builder setNameEntity(String nameEntity) {
+            this.nameEntity = nameEntity;
+            return this;
+        }
+
+        public EntityMenu.Builder setPath(String path) {
+            this.path = path;
             return this;
         }
 
 
-        public Menu build() {
-            return new Menu(id, name,number);
+        public EntityMenu build() {
+            return new EntityMenu(idEntity, numberEntity,nameEntity, path);
         }
     }
 }

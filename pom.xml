@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>ca.ppk</groupId>
-	<artifactId>pappking-operator-be-api</artifactId>
+	<groupId>us.gryc</groupId>
+	<artifactId>proentel-security-be-api</artifactId>
 	<version>0.0.1</version>
 	<packaging>war</packaging>
-	<name>PAPPKING OPERATOR</name>
-	<description>Pappking project - Operator API</description>
+	<name>PROENTEL SECURITY</name>
+	<description>Proentel project - Security API</description>
 
 
 	<!-- Inherit defaults from Spring Boot. -->
@@ -28,7 +28,7 @@
 	</ciManagement>
 
 	<organization>
-		<name>pappking</name>
+		<name>proentel</name>
 		<url></url>
 	</organization>
 
@@ -36,25 +36,12 @@
 	<!-- Section will be used when you use mvn Site, on developer section. see 
 		{https://maven.apache.org/plugins-archives/maven-site-plugin-3.3/index.html} -->
 	<developers>
+
 		<developer>
 			<id>00001</id>
-			<name>Jhonny Munoz</name>
-			<email>jhonnymunoz@gmail.com</email>
-			<organization>pappking</organization>
-			<roles>
-				<role>Developer</role>
-				<role>Architect</role>
-			</roles>
-			<properties>
-				<business></business>
-				<mobile></mobile>
-			</properties>
-		</developer>
-		<developer>
-			<id>00002</id>
 			<name>Ruben Ibarra</name>
 			<email>ribarr1@gmail.com</email>
-			<organization>pappking</organization>
+			<organization>GrupoRYC</organization>
 			<roles>
 				<role>Developer</role>
 				<role>Project Manager</role>
@@ -68,6 +55,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
+		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
 		</dependency>
@@ -75,14 +67,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
 		<dependency>
@@ -120,15 +113,28 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.11</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-data-jpa</artifactId>-->
-        <!--</dependency>-->
+		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+			<version>2.0.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.plugin</groupId>
+			<artifactId>spring-plugin-core</artifactId>
+			<version>2.0.0.RELEASE</version>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<defaultGoal>package</defaultGoal>
-		<finalName>pappking.operator.be.api</finalName>
+		<finalName>proentel.security.be.api</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

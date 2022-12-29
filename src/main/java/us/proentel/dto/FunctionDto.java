@@ -2,27 +2,20 @@ package us.proentel.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class LoginDto {
-    private String username;
-    private String password;
+public class FunctionDto {
+    private String function;
 
-
-    @JsonProperty("username")
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
-
-    @JsonProperty("password")
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    @JsonProperty("function")
+    public String getFunction() { return function; }
+    public void setFunction(String function) { this.function = function; }
 
 
 
     @Override
     public String toString() {
-        return "OperatorDto{" +
+        return "FunctionDto{" +
 
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                " functions='" + function + '\'' +
 
                 '}';
     }

@@ -1,4 +1,4 @@
-package co.ppk.exception;
+package us.proentel.exception;
 
 public abstract class RootException extends RuntimeException {
 

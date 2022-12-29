@@ -8,7 +8,7 @@
  * 
  ******************************************************************/
 
-package co.ppk.config.security;
+package us.proentel.config.security;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

@@ -1,4 +1,4 @@
-package co.ppk.enums;
+package us.proentel.enums;
 
 public enum Codes {
 

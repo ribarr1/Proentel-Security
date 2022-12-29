@@ -8,7 +8,7 @@
  *
  ******************************************************************/
 
-package co.ppk.validators;
+package us.proentel.validators;
 
 import org.springframework.stereotype.Component;
 

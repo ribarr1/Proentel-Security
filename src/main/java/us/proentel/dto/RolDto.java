@@ -2,12 +2,9 @@ package us.proentel.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class UserDto {
+public class RolDto {
     private String id;
-    private String email;
     private String name;
-    private String username;
-    private String password;
     private  String isactive;
     private  String createBy;
     private  String updateBy;
@@ -18,21 +15,11 @@ public class UserDto {
     public String getId() { return id;  }
     public void setId(String id) { this.id = id; }
 
-    @JsonProperty("email")
-    public String getEmail() { return email;  }
-    public void setEmail(String email) { this.email = email;  }
 
     @JsonProperty("name")
     public String getName() { return name;  }
     public void setName(String name) { this.name = name;    }
 
-    @JsonProperty("username")
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
-
-    @JsonProperty("password")
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
 
     @JsonProperty("isactive")
     public String getIsactive() { return isactive; }
@@ -58,10 +45,7 @@ public class UserDto {
     public String toString() {
         return "OperatorDto{" +
                 "id='" + id + '\'' +
-                ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", isactive='" + isactive + '\'' +
                 ", createBy='" + createBy + '\'' +
                 ", updateBy='" + updateBy + '\'' +

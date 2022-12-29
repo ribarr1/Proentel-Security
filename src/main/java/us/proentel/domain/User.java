@@ -1,33 +1,36 @@
 package us.proentel.domain;
 
-public class City {
+public class User {
 
 
 
     private final String id;
-    private final String code;
+    private final String email;
     private final String name;
-    private final String code_state;
+    private final String username;
+    private final String password;
     private final String isactive;
     private final String createBy;
     private final String updateBy;
     private final String createDate;
     private final String updateDate;
 
-    private City(
+    private User(
             String id,
-            String code,
+            String email,
             String name,
-            String code_state,
+            String username,
+            String password,
             String isactive,
             String createBy,
             String updateBy,
             String createDate,
             String updateDate) {
         this.id = id;
-        this.code = code;
+        this.email = email;
         this.name = name;
-        this.code_state = code_state;
+        this.username = username;
+        this.password = password;
         this.isactive = isactive;
         this.createBy = createBy;
         this.updateBy = updateBy;
@@ -37,9 +40,10 @@ public class City {
 
 
     public String getId() { return id; }
-    public String getCode() { return code; }
+    public String getEmail() { return email; }
     public String getName() { return name; }
-    public String getCode_state() { return code_state; }
+    public String getUsername() { return username; }
+    public String getPassword() { return password; }
     public String getIsactive() { return isactive; }
     public String getCreateBy() { return createBy; }
     public String getUpdateBy() { return updateBy; }
@@ -48,9 +52,10 @@ public class City {
 
     public static class Builder {
         private String id;
-        private String code;
+        private String email;
         private String name;
-        private String code_state;
+        private String username;
+        private String password;
         private  String isactive;
         private  String createBy;
         private  String updateBy;
@@ -58,53 +63,58 @@ public class City {
         private String updateDate;
 
 
-        public City.Builder setId(String id) {
+        public User.Builder setId(String id) {
             this.id = id;
             return this;
         }
 
-        public City.Builder setCode(String code) {
-            this.code = code;
+        public User.Builder setEmail(String email) {
+            this.email = email;
             return this;
         }
 
-        public City.Builder setName(String name) {
+        public User.Builder setName(String name) {
             this.name = name;
             return this;
         }
 
-        public City.Builder setCode_state(String code_state) {
-            this.code_state = code_state;
+        public User.Builder setUsername(String username) {
+            this.username = username;
             return this;
         }
 
-        public City.Builder setIsactive(String isactive) {
+        public User.Builder setPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public User.Builder setIsactive(String isactive) {
             this.isactive = isactive;
             return this;
         }
 
-        public City.Builder setCreateBy(String createBy) {
+        public User.Builder setCreateBy(String createBy) {
             this.createBy = createBy;
             return this;
         }
 
-        public City.Builder setUpdateBy(String updateBy) {
+        public User.Builder setUpdateBy(String updateBy) {
             this.updateBy = updateBy;
             return this;
         }
 
-        public City.Builder setCreateDate(String createDate) {
+        public User.Builder setCreateDate(String createDate) {
             this.createDate = createDate;
             return this;
         }
 
-        public City.Builder setUpdateDate(String updateDate) {
+        public User.Builder setUpdateDate(String updateDate) {
             this.updateDate = updateDate;
             return this;
         }
 
-        public City build() {
-            return new City(id, code, name,code_state, isactive, createBy, updateBy,  createDate, updateDate);
+        public User build() {
+            return new User(id, email, name,username, password, isactive, createBy, updateBy,  createDate, updateDate);
         }
     }
 }

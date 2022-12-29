@@ -8,14 +8,16 @@
  * 
  ******************************************************************/
 
-package co.ppk.web.controller;
+package us.proentel.web.controller;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 
-import co.ppk.dto.OperatorDto;
-import co.ppk.dto.WorkCodeDto;
-import co.ppk.service.BusinessManager;
-import co.ppk.validators.TransactionValidator;
+import us.proentel.data.UserRepository;
+import us.proentel.domain.*;
+import us.proentel.dto.*;
+import us.proentel.service.BusinessManager;
+import us.proentel.validators.TransactionValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,105 +27,135 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import co.ppk.enums.ResponseKeyName;
+import us.proentel.enums.ResponseKeyName;
 import org.springframework.web.client.HttpClientErrorException;
 
 import javax.servlet.http.HttpServletRequest;
 
+
 /**
  * Only service exposition point of services to FE layer
  * 
- * @author jmunoz
+ * @author ribarra
  *
  */
 
 @RestController
-@RequestMapping("/v1/operators")
+@RequestMapping("/v1")
 public class ProxyEndpointController extends BaseRestController {
 
-	private static final Logger LOGGER = LogManager.getLogger(ProxyEndpointController.class);
+    private static final Logger LOGGER = LogManager.getLogger(ProxyEndpointController.class);
 
-	/** The error properties. */
-	@Autowired
-	@Qualifier("errorProperties")
-	private Properties errorProperties;
+    /**
+     * The error properties.
+     */
+    @Autowired
+    @Qualifier("errorProperties")
+    private Properties errorProperties;
 
-	@Autowired
-	BusinessManager businessManager;
+    @Autowired
+    BusinessManager businessManager;
 
-	@Autowired
+    @Autowired
     TransactionValidator transactionValidator;
 
-	/**
-	 * entry endpoint receiving the message from messaging API to perform proper action
-	 *
-	 * @since 30/06/2018
-	 *
-	 * @author jmunoz
-	 * @version 1.0
-	 */
+    /**
+     * entry endpoint receiving the message from messaging API to perform proper action
+     *
+     * @author ribarra
+     * @version 1.0
+     * @since 28/10/1022
+     */
 
 
-    @RequestMapping(value = "/work-codes/{authorizationCode}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getWorkCodeByAuthorizationCode(@PathVariable("authorizationCode") String authorizationCode,
-                                                            HttpServletRequest request) {
-        ResponseEntity<Object> responseEntity;
-        try {
-            WorkCodeDto workCode = businessManager.getWorkCodeByAuthorizationCode(authorizationCode);
-            responseEntity = ResponseEntity.ok(workCode);
-        } catch (HttpClientErrorException ex) {
-            responseEntity = setErrorResponse(ex, request);
-        }
-        return responseEntity;
-    }
-
-
-
-
-    @RequestMapping(value = "/work-codes/create", method = RequestMethod.POST)
-    public ResponseEntity<Object> createWorkCode(@RequestBody WorkCodeDto workCode,
-                                                         BindingResult result) {
+    ////////////////////USUARIOSSSSSSSSSSSSSSS
+    @RequestMapping(value = "/user/create", method = RequestMethod.POST)
+    public ResponseEntity<Object> createUser(@RequestBody UserDto user,
+                                             BindingResult result) {
         ResponseEntity<Object> responseEntity = apiValidator(result);
         if (responseEntity != null) {
             return responseEntity;
         }
 
-        String workCodeId = businessManager.createWorkCode(workCode);
-        if(workCodeId.isEmpty()) {
+        String userId = businessManager.createUser(user);
+        if (userId.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
         }
-        return ResponseEntity.ok(workCodeId);
+        String status = "Success";
+        if (userId.equals("USUARIO INVALIDO"))
+            status = "Error";
+        HashMap<String, String> response = new HashMap<>();
+        response.put("status", status);
+        response.put("body", userId);
+        return ResponseEntity.ok(response);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getOperatorById(@PathVariable("id") String id,
-                                                                 HttpServletRequest request) {
-        ResponseEntity<Object> responseEntity;
-        try {
-            OperatorDto operator = businessManager.getOperatorById(id);
-            responseEntity = ResponseEntity.ok(operator);
-        } catch (HttpClientErrorException ex) {
-            responseEntity = setErrorResponse(ex, request);
-        }
-        return responseEntity;
-    }
-
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity<Object> createOperator(@RequestBody OperatorDto operator,
-                                                 BindingResult result) {
+    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
+    public ResponseEntity<Object> loginUser(@RequestBody LoginDto login,
+                                            BindingResult result) {
         ResponseEntity<Object> responseEntity = apiValidator(result);
         if (responseEntity != null) {
             return responseEntity;
         }
 
-        String operatorId = businessManager.createOperator(operator);
-        if(operatorId.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
-        }
-        return ResponseEntity.ok(operatorId);
+        JwtDto loginUser = businessManager.loginUser(login);
+
+        return ResponseEntity.ok(loginUser);
     }
 
 
+    //ROLESSSSSSSSSSSSSSSSSSSSSSSS
+    @RequestMapping(value = "/rol/create", method = RequestMethod.POST)
+    public ResponseEntity<Object> createRol(@RequestBody RolDto rol,
+                                             BindingResult result) {
+        ResponseEntity<Object> responseEntity = apiValidator(result);
+        if (responseEntity != null) {
+            return responseEntity;
+        }
+
+        String rolId = businessManager.createRol(rol);
+        if(rolId.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+        }
+        String status="Success";
+        if(rolId.equals("ROL YA EXISTE"))
+            status = "Error";
+        HashMap<String,String> response = new HashMap<>();
+        response.put("status", status);
+        response.put("body", rolId);
+        return ResponseEntity.ok(response);
+    }
+
+
+
+    //MENUuUUUUUU
+
+    @RequestMapping(value = "/menu/{rol}", method = RequestMethod.GET)
+    public List<MenuDto> getMenuByRol(@PathVariable("rol") String rol, HttpServletRequest request) {
+        ResponseEntity<Object> responseEntity;
+        List<MenuDto> menus=null;
+        try{
+            menus = businessManager.getMenuByRol(rol);
+
+        } catch (HttpClientErrorException ex) {
+            responseEntity = setErrorResponse(ex, request);
+        }
+        return menus;
+    }
+
+
+    @RequestMapping(value = "/menu/items/{rol}/{itemId}", method = RequestMethod.GET)
+    public List<FunctionDto> getFunctionByEntityId(@PathVariable("rol") String rol, @PathVariable("itemId") String itemId, HttpServletRequest request) {
+        ResponseEntity<Object> responseEntity;
+        List<FunctionDto> functionDtos=null;
+        try{
+            functionDtos = businessManager.getFunctionByEntityId(itemId,rol);
+
+        } catch (HttpClientErrorException ex) {
+            responseEntity = setErrorResponse(ex, request);
+        }
+        return functionDtos;
+    }
 
     private ResponseEntity<Object> setErrorResponse(HttpClientErrorException ex, HttpServletRequest request) {
         HashMap<String, Object> map = new HashMap<>();

@@ -1,4 +1,4 @@
-package co.ppk.exception.advice;
+package us.proentel.exception.advice;
 
 import java.io.Serializable;
 import java.util.ArrayList;

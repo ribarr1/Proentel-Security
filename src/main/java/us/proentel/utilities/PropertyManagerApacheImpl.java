@@ -1,4 +1,4 @@
-package co.ppk.utilities;
+package us.proentel.utilities;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,9 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import co.ppk.exception.DataNotFound;
-import co.ppk.exception.PpkException;
-import co.ppk.exception.IncorrectParameter;
+import us.proentel.exception.DataNotFound;
+import us.proentel.exception.PpkException;
+import us.proentel.exception.IncorrectParameter;
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.EnvironmentConfiguration;
 import org.apache.commons.configuration.PropertiesConfiguration;

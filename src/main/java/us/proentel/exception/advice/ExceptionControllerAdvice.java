@@ -1,11 +1,11 @@
-package co.ppk.exception.advice;
+package us.proentel.exception.advice;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import co.ppk.exception.PpkFieldValidationException;
+import us.proentel.exception.PpkFieldValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import co.ppk.exception.Codes;
+import us.proentel.exception.Codes;
 
 /**
  * <h1>Exception controller advice</h1>
@@ -47,13 +47,13 @@ public class ExceptionControllerAdvice {
   private ResponseEntity<Object> processBindingError(BindingResult result ) {
 	    List<FieldError> validationErrors = result.getFieldErrors();
 
-	    co.ppk.exception.advice.Error error = new co.ppk.exception.advice.Error(Codes.FIELDS_VALIDATION_ERROR.getErrorCode(), Codes.FIELDS_VALIDATION_ERROR.getErrorMessage());
+	    Error error = new Error(Codes.FIELDS_VALIDATION_ERROR.getErrorCode(), Codes.FIELDS_VALIDATION_ERROR.getErrorMessage());
 
 	    for (FieldError fieldError : validationErrors) {
 	      error.addFieldError(fieldError.getCode(), fieldError.getField(), fieldError.getDefaultMessage());
 	    }
 
-	    Map<String, co.ppk.exception.advice.Error> errorMap = new HashMap<>();
+	    Map<String, Error> errorMap = new HashMap<>();
 	    errorMap.put("Error", error);
 	    return new ResponseEntity<Object>(errorMap, HttpStatus.BAD_REQUEST);
 	  }
